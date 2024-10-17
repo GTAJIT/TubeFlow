@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary';
 import fs from 'fs';
+import { ApiError } from './ApiError';
 
 // Configure Cloudinary with environment variables
 cloudinary.config({
@@ -32,4 +33,18 @@ const uploadOnCloudinary = async (localFilePath: string) => {
     }
 };
 
-export default uploadOnCloudinary;
+const deleteOldImage = async(linkOfPath: string)=>{
+    // if(!linkOfPath) return;
+    try {
+        const image = linkOfPath.split("/")[7].split(".")[0];
+        const result = await cloudinary.uploader.destroy(image, (error, result) => {
+            return result;
+        });
+        if(!result) throw new ApiError(404, "Image Error")
+        return result
+    } catch (error: any) {
+        throw new ApiError(400, error.message)
+    }
+}
+
+export {uploadOnCloudinary, deleteOldImage};

@@ -1,40 +1,22 @@
 import { asyncHandler } from "../utils/AsyncHandler";
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../db/db";
 import bcrypt from 'bcryptjs';
-import zod from 'zod';
 import jwt from "jsonwebtoken"
 import { ApiError } from "../utils/ApiError";
-import uploadOnCloudinary from "../utils/cloudinary";
+import {uploadOnCloudinary, deleteOldImage} from "../utils/cloudinary";
 import { generateAccessAndRefreshToken } from "../utils/token";
+import { registrationSchema, loginSchema, updateUsernameSchema, passwordSchema } from "../zod_schema/user.schema";
 interface TokenInterface {
     userId: string
 }
-const registrationSchema = zod.object({
-    username: zod.string(),
-    email: zod.string().email(),
-    password: zod.string().min(8),
-    fullName: zod.string()
-});
-const loginSchema = zod.object({
-    username: zod.string(),
-    email: zod.string().email(),
-    password: zod.string().min(8),
-});
-const passwordSchema = zod.object({
-    oldPassword: zod.string(),
-    newPassword: zod.string()
-})
-const updateUsernameSchema = zod.object({
-    username: zod.string()
-})
+
 const options = {
     httpOnly: true,
     secure: true
 }
-const prisma = new PrismaClient();
 
-const registerHandler = asyncHandler(async (req: Request, res: Response) => {
+const registerHandler = asyncHandler(async (req:Request, res:Response ) => {
     if (!req.body) {
         return res.status(400).json({ message: "Request body is required." });
     }
@@ -88,7 +70,7 @@ const registerHandler = asyncHandler(async (req: Request, res: Response) => {
     }
 });
 
-const loginHandler = asyncHandler(async(req: Request, res: Response)=>{
+const loginHandler = asyncHandler(async(req:Request, res:Response )=>{
     const {success, data} = loginSchema.safeParse(req.body);
     if(!success){
         throw new ApiError(400, "Bad Request")
@@ -118,7 +100,7 @@ const loginHandler = asyncHandler(async(req: Request, res: Response)=>{
     })
 })
 
-const logoutHandler = asyncHandler(async(req, res)=>{
+const logoutHandler = asyncHandler(async(req:Request, res:Response )=>{
     const userId = req.userId
     const user = await prisma.user.findUnique({
         where: { id: userId },
@@ -146,7 +128,7 @@ const logoutHandler = asyncHandler(async(req, res)=>{
     })
 })
 
-const refreshAccessToken = asyncHandler(async(req, res)=>{
+const refreshAccessToken = asyncHandler(async(req:Request, res:Response )=>{
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
     console.log(incomingRefreshToken)
     const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
@@ -184,7 +166,7 @@ const refreshAccessToken = asyncHandler(async(req, res)=>{
     }
 })
 
-const updatePassword = asyncHandler(async(req, res)=>{
+const updatePassword = asyncHandler(async(req:Request, res:Response )=>{
     const {success, data} = passwordSchema.safeParse(req.body)
     if(!success){
         throw new ApiError(401, "Wrong Input")
@@ -220,7 +202,7 @@ const updatePassword = asyncHandler(async(req, res)=>{
     })
 })
 
-const getCurrentUser = asyncHandler(async(req, res)=>{
+const getCurrentUser = asyncHandler(async(req:Request, res:Response )=>{
     const userId = req.userId;
     const result = await prisma.user.findUnique({
         where:{
@@ -233,7 +215,7 @@ const getCurrentUser = asyncHandler(async(req, res)=>{
     })
 })
 
-const updateUsername = asyncHandler(async(req, res)=>{
+const updateUsername = asyncHandler(async(req:Request, res:Response )=>{
     const {success, data} = updateUsernameSchema.safeParse(req.body)
     if(!success){
         throw new ApiError(400, "Bad Request")
@@ -253,13 +235,25 @@ const updateUsername = asyncHandler(async(req, res)=>{
     })
 })
 
-const updateUserAvatar = asyncHandler(async(req, res)=>{
+const updateUserAvatar = asyncHandler(async(req:Request, res:Response )=>{
     const file = req.file;
     // console.log(file)
     const avatarPath = file?.path
     if(!avatarPath) throw new ApiError(404, "File Not Found")
     const result = await uploadOnCloudinary(avatarPath)
     if(!result) return "Something Went Wrong"
+    const previousAvatar = await prisma.user.findUnique({
+        where:{
+            id: req.userId
+        }, 
+        select:{
+            avatar: true
+        }
+    })
+    if(!previousAvatar) return;
+    const isImageDeleted=await deleteOldImage(previousAvatar.avatar)
+    // console.log(isImageDeleted)
+    if(isImageDeleted.result !='ok') throw new ApiError(400, "Previous Image cannot be deleted")
     const databaseUpdate = await prisma.user.update({
         where:{
             id: req.userId
@@ -274,7 +268,7 @@ const updateUserAvatar = asyncHandler(async(req, res)=>{
     })
 })
 
-const updateUserCoverImage = asyncHandler(async(req, res)=>{
+const updateUserCoverImage = asyncHandler(async(req:Request, res:Response )=>{
     const file = req.file;
     // console.log(file)
     const coverImagePath = file?.path
