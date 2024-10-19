@@ -18,8 +18,8 @@ model Subscription {
   id            String  @id @default(uuid())
   subscriber    User    @relation("Subscriber",fields: [subscriberId], references: [id])
   channel       User    @relation("Channel",fields: [channelId], references: [id])
-  subscriberId  String  //channels which he had subscribed  
-  channelId     String  //How many people subscribed him
+  subscriberId  String  //one who is subscribing
+  channelId     String  //one to whom 'subscriber' is subscribing
   createdAt     DateTime @default(now())
 }
 
