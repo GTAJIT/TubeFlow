@@ -20,7 +20,9 @@ app.use(cookieParser())
 import userRouter from './routes/user.routes'
 import videoRouter from './routes/video.routes'
 import subscriptionRouter from './routes/subscription.routes'
+import tweetRouter from './routes/tweet.routes'
 app.use("/api/v1/user", userRouter)
 app.use('/api/v1/video', videoRouter)
 app.use('/api/v1/subscription', subscriptionRouter)
+app.use('/api/v1/tweet', tweetRouter)
 export default app;
