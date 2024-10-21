@@ -16,9 +16,9 @@ router.route('/upload-video').post(verifyJWT,videoUpload.fields([
 ]),uploadVideo)
 router.route('/toggle-publish-status/:videoId').post(verifyJWT, togglePublishStatus)
 router.route('/get-video/:videoId').get(verifyJWT,getVideoById)
-router.route('/delete-video/:videoId').get(verifyJWT,deleteVideo)
+router.route('/delete-video/:videoId').delete(verifyJWT,deleteVideo)
 router.route('/get-all-videos').get(verifyJWT,getAllVideos)
-router.route('/update-video/:videoId').post(verifyJWT,upload.single('thumbnail'), updateVideo)
+router.route('/update-video/:videoId').put(verifyJWT,upload.single('thumbnail'), updateVideo)
 
 
 export default router
