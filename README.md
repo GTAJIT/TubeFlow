@@ -77,10 +77,12 @@ npm run dev
 - **Backend**: Built with **Node.js** and **Express.js**, managing API routes and business logic.
 - **Prisma** ensures database queries are type-safe and maintainable.
 
+
+
 ## 🚧 Deployment
 
 While deployment is not yet planned, the entire project is containerized with **Docker**, making it easy to deploy on any server with Docker support.
 
 ## 🔗 GitHub Repository
 
-Find the project repository [here](https://github.com/MohakGupta2004/tubeflow.git).
+Find the project repository [here](https://github.com/MohakGupta2004/tubeflow.git). Repository managed by MohakGupta2004 and MohakTech
