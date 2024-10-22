@@ -1,88 +1,88 @@
-# YouTube Backend API
+# TubeFlow - Full Stack YouTube-like Platform
 
-This project is a backend system for a YouTube-like platform, originally built by **Hitest Choudhury**. I am rebuilding it using **TypeScript** and **Prisma** (for PostgreSQL running on Docker) to improve my understanding of backend development and explore opportunities for enhancements.
+This project, **TubeFlow**, is a full-stack implementation of a YouTube-like platform, initially built by **Hitest Choudhury**. I am rebuilding and expanding it using **TypeScript** and **Prisma** (with a PostgreSQL database on Docker) to strengthen my skills in full-stack development, with enhancements on both the backend and frontend.
 
 ## 🚀 Features
 
 - **User Authentication**: Secure login/signup with JWT-based token management.
-- **Video Management**: Upload, stream, like, comment, and share videos.
-- **Playlists**: Create and manage user-specific playlists.
-- **Real-time Notifications**: Powered by Socket.io for instant updates.
-- **Video Recommendations**: Personalized suggestions based on user activity.
+- **Video Management**: Users can upload, stream, like, comment, and share videos.
+- **Playlists**: Enable users to create and manage personalized playlists.
+- **Real-time Notifications**: Get instant updates on likes, comments, and subscriptions, powered by Socket.io.
+- **Video Recommendations**: Provides personalized suggestions based on user interaction and preferences.
 
 ## 🛠️ Tech Stack
 
-- **Node.js** with **Express.js**
-- **TypeScript** for static typing and better code management.
-- **Prisma ORM** for database interaction with **PostgreSQL**.
-- **Docker** to containerize the PostgreSQL database.
-- **JWT** for secure authentication.
-- **bcrypt** for password hashing.
+- **Frontend**: React.js with TypeScript for a scalable, efficient user interface.
+- **Backend**: Node.js with Express.js for server-side logic.
+- **TypeScript**: Ensures type safety and better code management across the stack.
+- **Prisma ORM**: For type-safe interactions with a PostgreSQL database.
+- **Docker**: Containerizes the PostgreSQL database and provides easy portability.
+- **JWT & bcrypt**: For secure authentication and password management.
 
 ## 📦 Installation
 
-1. **Clone the repository**:
-    ```bash
-    git clone https://github.com/MohakGupta2004/youtube-backend.git
-    cd youtube-backend
-    ```
+### 1. Clone the repository:
+```bash
+git clone https://github.com/MohakGupta2004/tubeflow.git
+cd tubeflow
+```
 
-2. **Install dependencies**:
-    ```bash
-    npm install
-    ```
+### 2. Install dependencies:
+```bash
+npm install
+```
 
-3. **Set up Docker for PostgreSQL**:
-    Ensure Docker is installed and run the following command to set up PostgreSQL:
-    ```bash
-    docker run -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres
-    ```
+### 3. Set up Docker for PostgreSQL:
+Ensure Docker is installed, and set up PostgreSQL by running:
+```bash
+docker run -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres
+```
 
-4. **Environment variables**:
-    Create a `.env` file and configure the necessary environment variables such as:
-    ```plaintext
-    DATABASE_URL="postgresql://you:yousecretpassword@localhost:5432/youtube"
-    PORT=5000
-    CORS_ORIGIN="http://localhost:5173"
-    JWT_SECRET=
-    JWT_EXPIRY=
-    REFRESH_TOKEN_SECRET=
-    REFRESH_EXPIRY=
-    CLOUDINARY_API_SECRET=
-    CLOUDINARY_API_KEY=
-    CLOUDINARY_CLOUD_NAME=
-    ```
+### 4. Configure environment variables:
+Create a `.env` file and set up the following environment variables:
+```plaintext
+DATABASE_URL="postgresql://user:password@localhost:5432/tubeflow"
+PORT=5000
+CORS_ORIGIN="http://localhost:5173"
+JWT_SECRET=
+JWT_EXPIRY=
+REFRESH_TOKEN_SECRET=
+REFRESH_EXPIRY=
+CLOUDINARY_API_SECRET=
+CLOUDINARY_API_KEY=
+CLOUDINARY_CLOUD_NAME=
+```
 
-5. **Run the application**:
-    ```bash
-    npm run dev
-    ```
+### 5. Run the application:
+```bash
+npm run dev
+```
 
-## 🔧 Prisma and Database
+## 🔧 Database Setup with Prisma
 
-1. **Prisma Migrations**: After setting up PostgreSQL with Docker, apply the migrations:
-    ```bash
-    npx prisma migrate dev
-    ```
+1. **Apply Prisma Migrations**:
+   After PostgreSQL is up and running, apply the migrations:
+   ```bash
+   npx prisma migrate dev
+   ```
 
-2. **Prisma Studio**: Use Prisma Studio to explore your database:
-    ```bash
-    npx prisma studio
-    ```
+2. **Explore the Database** with Prisma Studio:
+   ```bash
+   npx prisma studio
+   ```
 
-## 🧑‍💻 Development
+## 🧑‍💻 Development Process
 
-- **TypeScript** ensures type safety and maintainable code.
-- **Prisma** simplifies database management with type-safe queries.
+- **Frontend**: The frontend is developed using **React** and **TypeScript**, focusing on component-based design and reactivity.
+- **Backend**: Built with **Node.js** and **Express.js**, managing API routes and business logic.
+- **Prisma** ensures database queries are type-safe and maintainable.
+
+
 
 ## 🚧 Deployment
 
-I haven't planned deployment yet, but the project is containerized for portability.
+While deployment is not yet planned, the entire project is containerized with **Docker**, making it easy to deploy on any server with Docker support.
 
 ## 🔗 GitHub Repository
 
-Find the project repository [here](https://github.com/MohakGupta2004/youtube-backend.git).
-
---- 
-
-Feel free to explore, suggest improvements, or contribute to the project as I continue to refine and expand it for learning purposes!
+Find the project repository [here](https://github.com/MohakGupta2004/tubeflow.git). Repository managed by MohakGupta2004 and MohakTech
