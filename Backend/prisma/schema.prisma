@@ -47,7 +47,7 @@ model Video {
   id          Int      @id @unique @default(autoincrement())
   comments    Comment[]
   likes       Like[]
-  playlist    Playlist[]
+  playlists    PlaylistVideo[]
   videoFile   String
   thumbnail   String
   owner       User     @relation(fields: [userId], references: [id])
@@ -101,10 +101,17 @@ model Playlist{
   id  Int @id @default(autoincrement())
   name String
   description String
-  videos  Video @relation(fields: [videoId], references: [id])
-  videoId Int
+  videos   PlaylistVideo[]
   owner   User  @relation(fields: [userId], references: [id])
   userId  String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model PlaylistVideo{
+  id Int @id @default(autoincrement())
+  playlist Playlist @relation(fields: [playlistId], references: [id])
+  playlistId Int
+  video Video @relation(fields: [videoId], references: [id])
+  videoId Int
 }
