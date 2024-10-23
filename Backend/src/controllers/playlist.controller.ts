@@ -90,12 +90,58 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
 const deletePlaylist = asyncHandler(async (req, res) => {
     const {playlistId} = req.params
     // TODO: delete playlist
+    const existingPlaylist = await prisma.playlist.findUnique({
+        where:{
+            id: parseInt(playlistId)
+        }
+    })
+    // const existingPlaylistVideos = await prisma.playlistVideo.findMany({
+    //     where:{
+    //         playlistId: parseInt(playlistId)
+    //     }
+    // })
+    if(!existingPlaylist) throw new ApiError(404, "No playlist found")
+    // if(!existingPlaylistVideos) throw new ApiError(404, "No playlist video found")
+    await prisma.playlistVideo.deleteMany({
+        where:{
+            playlistId: parseInt(playlistId)
+        }
+    })
+    
+    const result = await prisma.playlist.delete({
+        where:{
+            id: existingPlaylist.id,
+        }
+    })
+    if(!result) throw new ApiError(400, "Cannot able to delete it.")
+    res.status(200).json({
+        message: "Playlist Deleted"
+    })
 })
 
 const updatePlaylist = asyncHandler(async (req, res) => {
     const {playlistId} = req.params
     const {name, description} = req.body
     //TODO: update playlist
+    const existingPlaylist = await prisma.playlist.findUnique({
+        where:{
+            id: parseInt(playlistId)
+        }
+    })
+    if(!existingPlaylist) throw new ApiError(400, "No Playlist Found");
+    const result = await prisma.playlist.update({
+        where:{
+            id: existingPlaylist.id
+        },
+        data:{
+            name: name,
+            description: description
+        }
+    })
+    if(!result) throw new ApiError(401, "Can't Able to Update")
+    res.status(200).json({
+        message: "Playlist Update"
+    })
 })
 
 export {
