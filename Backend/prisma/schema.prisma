@@ -31,6 +31,7 @@ model User {
   tweets        Tweet[]
   comments      Comment[]
   likes         Like[]
+  playlist      Playlist[]
   username      String        @unique
   email         String        @unique
   fullName      String
@@ -46,6 +47,7 @@ model Video {
   id          Int      @id @unique @default(autoincrement())
   comments    Comment[]
   likes       Like[]
+  playlist    Playlist[]
   videoFile   String
   thumbnail   String
   owner       User     @relation(fields: [userId], references: [id])
@@ -91,6 +93,18 @@ model Like {
   commentId   Int?
   tweet       Tweet?   @relation(fields: [tweetId], references: [id])
   tweetId     Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Playlist{
+  id  Int @id @default(autoincrement())
+  name String
+  description String
+  videos  Video @relation(fields: [videoId], references: [id])
+  videoId Int
+  owner   User  @relation(fields: [userId], references: [id])
+  userId  String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
