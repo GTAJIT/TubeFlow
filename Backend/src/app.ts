@@ -24,6 +24,7 @@ import tweetRouter from './routes/tweet.routes'
 import commentRouter from './routes/comment.routes'
 import likeRouter from './routes/like.routes'
 import plyalistRouter from './routes/playlist.routes'
+import dashboardRouter from './routes/dashboard.routes'
 app.use("/api/v1/user", userRouter)
 app.use('/api/v1/video', videoRouter)
 app.use('/api/v1/subscription', subscriptionRouter)
@@ -31,4 +32,5 @@ app.use('/api/v1/tweet', tweetRouter)
 app.use('/api/v1/comment', commentRouter)
 app.use('/api/v1/like', likeRouter);
 app.use("/api/v1/playlist", plyalistRouter)
+app.use("/api/v1/dashboard", dashboardRouter)
 export default app;
