@@ -8,7 +8,7 @@ interface TokenInterface {
 export const verifyJWT = async (req: Request, res: Response, next: NextFunction)=>{
     try {
         const token = req.headers.authorization?.split(" ")[1] || req.cookies.accessToken;
-        console.log(token)  
+        // console.log(req.headers)
         if(!token) 
             throw new ApiError(401, "Unauthorized Request")
         if(!process.env.JWT_SECRET){

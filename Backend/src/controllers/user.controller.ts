@@ -76,6 +76,7 @@ const registerHandler = asyncHandler(async (req: Request, res: Response) => {
 
 const loginHandler = asyncHandler(async (req: Request, res: Response) => {
   const { success, data } = loginSchema.safeParse(req.body);
+  console.log(data)
   if (!success) {
     throw new ApiError(400, "Bad Request");
   }
