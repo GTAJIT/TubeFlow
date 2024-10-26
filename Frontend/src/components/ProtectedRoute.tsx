@@ -1,9 +1,5 @@
 import { Navigate } from "react-router-dom";
-
-// Replace this with your actual authentication check
-const isAuthenticated = () => {
-  return localStorage.getItem("token") !== null;
-};
+import isAuthenticated from "../utils/auth";
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
   return isAuthenticated() ? children : <Navigate to="/login" />;

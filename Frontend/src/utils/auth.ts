@@ -1,19 +1,14 @@
-import { jwtDecode } from "jwt-decode"
-const isAuthenticated = ()=>{
-    try {
-        const token = localStorage.getItem('token')
-        if(!token) return false;
-        const decode = jwtDecode(token)
-        const currentTime = Date.now()
-        if(decode.exp && decode.exp< currentTime){
-            localStorage.removeItem('token')
-            return false;
-        }
-        return true;
-    } catch (error) {
-        console.log(error)
-        return false;
-    }
-}
+import { useRecoilValue } from "recoil";
+import { authState } from "../context/auth.atoms";
+
+// Replace this with your actual authentication check
+const isAuthenticated = () => {
+  const token = localStorage.getItem("token") !== null;
+  const authUser = useRecoilValue(authState)
+  if(!token) return false 
+  if(!authUser) return false
+
+  return true
+};
 
 export default isAuthenticated
