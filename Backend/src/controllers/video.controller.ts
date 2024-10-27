@@ -210,11 +210,27 @@ const getAllVideos = asyncHandler(async(req, res) => {
     }
 });
 
+const watchHistory = asyncHandler(async(req, res)=>{
+    const {videoId} = req.params
+    if(!req.userId) throw new ApiError(400, "Unauthorized Access")
+    const result = await prisma.watchHistory.create({
+            data:{
+                userId:req.userId,
+                videoId: parseInt(videoId)
+            }
+    })
+
+    if(!result) throw new ApiError(404, "Can't able to add this to watch history")
+    res.status(200).json({
+        message: "Added to watch history"
+    })
+})
 export {
     uploadVideo,
     togglePublishStatus,
     getVideoById,
     updateVideo,
     deleteVideo,
-    getAllVideos
+    getAllVideos,
+    watchHistory
 }

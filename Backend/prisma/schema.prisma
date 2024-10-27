@@ -25,7 +25,8 @@ model Subscription {
 
 model User {
   id           String        @id @unique @default(uuid())
-  watchHistory Video[]
+  watchHistory WatchHistory[]
+  videos        Video[]
   subscriptions Subscription[] @relation("Subscriber")
   subscribers   Subscription[] @relation("Channel")
   tweets        Tweet[]
@@ -47,7 +48,8 @@ model Video {
   id          Int      @id @unique @default(autoincrement())
   comments    Comment[]
   likes       Like[]
-  playlists    PlaylistVideo[]
+  watchHistory WatchHistory[]
+  playlists   PlaylistVideo[]
   videoFile   String
   thumbnail   String
   owner       User     @relation(fields: [userId], references: [id])
@@ -59,6 +61,15 @@ model Video {
   isPublished Boolean
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model WatchHistory{
+  id  Int   @id @default(autoincrement())
+  user  User @relation(fields: [userId], references: [id])
+  userId String
+  video   Video  @relation(fields: [videoId], references: [id])
+  videoId Int
+  watchedAt DateTime  @default(now())
 }
 
 model Comment {
