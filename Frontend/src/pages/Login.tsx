@@ -44,6 +44,7 @@ function Login() {
 
       // Update auth state
       setAuthUser(true);
+      localStorage.setItem('authUser', 'true');
       console.log("Auth state set to true. Navigating to /dashboard.");
 
       // Separate the navigation call for clarity

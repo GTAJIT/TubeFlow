@@ -370,6 +370,13 @@ const getWatchHistory = asyncHandler(async(req, res)=>{
         message: "Watch history fetched successfully",
     });
 })
+
+const check = asyncHandler(async(req, res)=>{
+  res.status(200).json({
+    message: "Authorized"
+  })
+})
+
 export {
   registerHandler,
   loginHandler,
@@ -381,5 +388,6 @@ export {
   updateUserAvatar,
   updateUserCoverImage,
   getUserChannelProfile,
-  getWatchHistory
+  getWatchHistory,
+  check
 };
