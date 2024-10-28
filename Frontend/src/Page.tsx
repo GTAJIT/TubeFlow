@@ -1,28 +1,20 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import {  Routes, Route, useLocation } from "react-router-dom";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute
 import Channel from "./pages/Channel";
-import { useEffect } from "react";
-import { authState } from "./context/auth.atoms";
+import Video from "./pages/Video";
+import Navbar from "./components/Navbar";
 
 function Page() {
-  const setAuthUser = useSetRecoilState(authState);
+  const location = useLocation()
+  const isAuth = location.pathname == '/signup' || location.pathname =='/login' || location.pathname == '/'
 
-  useEffect(() => {
-    const fetchAuthUser = async ()=> {
-    const isAuthenticated = await localStorage.getItem("authUser") === "true";
-    setAuthUser(isAuthenticated);
-    console.log("App - authUser set from localStorage:", isAuthenticated);
-    }
-    fetchAuthUser()
-  }, [setAuthUser]);
   return (
     <>
-      <BrowserRouter>
+    {!isAuth && <Navbar/>}
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Home />} />
@@ -43,8 +35,8 @@ function Page() {
               </ProtectedRoute>
             }
           />
+          <Route path="/video/:videoId" element={<Video/>}></Route>
         </Routes>
-      </BrowserRouter>
     </>
   );
 }

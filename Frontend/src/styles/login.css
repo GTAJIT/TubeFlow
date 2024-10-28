@@ -1,15 +1,10 @@
 /* General page styles */
-body {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background: radial-gradient(circle at center, #121212, #0b0b0b);
-    color: #e0e0e0;
+  .container{
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
   }
-  
   /* Centered login container */
   .login-container {
     background-color: #1a1a1a;
@@ -17,7 +12,7 @@ body {
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 2px 10px rgba(255, 255, 255, 0.1);
     width: 320px;
-    display: flex;
+    display: flex; 
     flex-direction: column;
     gap: 1.2rem;
     border: 1px solid #333;

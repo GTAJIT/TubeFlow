@@ -1,12 +1,9 @@
 /* General page styles */
-body {
+.container {
     margin: 0;
     font-family: 'Roboto', sans-serif;
     background: radial-gradient(circle at center, #121212, #0b0b0b);
     color: #e0e0e0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     height: 100vh;
     padding: 0 1rem; /* Add padding for smaller screens */
   }

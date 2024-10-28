@@ -43,7 +43,7 @@ function Login() {
       Cookie.set('token', res.data.accessToken);
 
       // Update auth state
-      setAuthUser(true);
+      setAuthUser(res.data.userId);
       localStorage.setItem('authUser', 'true');
       console.log("Auth state set to true. Navigating to /dashboard.");
 
@@ -57,6 +57,8 @@ function Login() {
   };
 
   return (
+  <div className="container">
+
     <form className="login-container" onSubmit={handleSubmit}>
       <input
         type="text"
@@ -64,25 +66,26 @@ function Login() {
         placeholder="Username"
         value={formData.username}
         onChange={handleChange}
-      />
+        />
       <input
         type="email"
         name="email"
         placeholder="example@email.com"
         value={formData.email}
         onChange={handleChange}
-      />
+        />
       <input
         type="password"
         name="password"
         placeholder="*********"
         value={formData.password}
         onChange={handleChange}
-      />
+        />
       <button type="submit">Login</button>
 
       {error && <p>{error}</p>}
     </form>
+</div>
   );
 }
 

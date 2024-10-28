@@ -1,0 +1,115 @@
+/* navbar.css */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #202124; /* Darker background */
+    padding: 12px 24px;
+    color: #E8EAED; /* Soft white text for contrast */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  .navbar__left,
+  .navbar__center,
+  .navbar__right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar__icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    cursor: pointer;
+    filter: brightness(0) invert(1); /* Make icons white */
+    transition: transform 0.2s ease; /* Smooth hover effect */
+  }
+  
+  .navbar__icon:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
+  }
+  
+  .navbar__logo {
+    width: 100px;
+    height: auto;
+    cursor: pointer;
+  }
+  
+  .navbar__center {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    max-width: 500px;
+  }
+  
+  .navbar__search-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px 0 0 20px;
+    border: none;
+    outline: none;
+    background-color: #303134; /* Slightly lighter input background */
+    color: #E8EAED;
+    font-size: 14px;
+  }
+  
+  .navbar__search-input::placeholder {
+    color: #BDC1C6; /* Subtle placeholder color */
+  }
+  
+  .navbar__search-button {
+    padding: 10px 14px;
+    background-color: #FF4757; /* Accent color */
+    border-radius: 0 20px 20px 0;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+  }
+  
+  .navbar__search-button:hover {
+    background-color: #FF6B81; /* Lighter accent on hover */
+  }
+  
+  .navbar__right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .navbar__icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .navbar__icon-button:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
+  }
+  
+  .navbar__profile-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #FF4757; /* Accent border for profile image */
+  }
+  
+  @media (max-width: 768px) {
+    .navbar__center {
+      display: none; /* Hide search input on smaller screens */
+    }
+  
+    .navbar__icon,
+    .navbar__logo,
+    .navbar__profile-img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  

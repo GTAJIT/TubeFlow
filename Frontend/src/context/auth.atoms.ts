@@ -1,10 +1,9 @@
-import {AtomEffect, atom } from "recoil";
+import {atom } from "recoil";
 
 const authState = atom({
     key: "authState",
-    default: false,
+    default: ""
 })
-
 export {
     authState
 }

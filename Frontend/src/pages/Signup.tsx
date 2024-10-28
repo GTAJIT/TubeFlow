@@ -73,6 +73,8 @@ function Signup() {
   };
 
   return (
+  <div className='container'>
+
     <form className="signup-container" onSubmit={handleSubmit}>
       <input
         type="text"
@@ -118,6 +120,7 @@ function Signup() {
         Already have an account? <Link to="/login">here</Link>
       </p>
     </form>
+  </ div>
   );
 }
 
