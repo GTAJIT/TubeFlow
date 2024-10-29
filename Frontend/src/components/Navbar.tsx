@@ -7,6 +7,8 @@ import userProfile from '../../public/assets/user_profile.jpg';
 import '../styles/component_styles/navbar.css';
 import { useEffect, useState } from 'react';
 import api from '../services/api';
+import { useSetRecoilState } from 'recoil';
+import { hamburger } from '../context/hamburger.atoms';
 
 type UserDetails = {
   id: "";
@@ -34,6 +36,7 @@ const [userDetails, setUserDetails] = useState<UserDetails>({
   createdAt: "",
   updatedAt: ""
 })
+const setHamburger = useSetRecoilState(hamburger)
   useEffect(()=>{
     const token = localStorage.getItem('token')
     api.get('/user/get-current-user',{
@@ -41,7 +44,7 @@ const [userDetails, setUserDetails] = useState<UserDetails>({
         Authorization: `Bearer ${token}`
       }
     })
-    .then((res)=>{
+    .then((res: any)=>{
         setUserDetails(res.data.user)
         console.log(res.data)
     })
@@ -49,7 +52,9 @@ const [userDetails, setUserDetails] = useState<UserDetails>({
   return (
     <nav className="navbar">
       <div className="navbar__left">
-        <img src={menuIcon} alt="Menu Icon" className="navbar__icon" />
+        <img src={menuIcon} alt="Menu Icon" className="navbar__icon" onClick={()=>{
+          setHamburger((item)=>!item)
+        }}/>
         <img src={logo} alt="Logo" className="navbar__logo" />
       </div>
 

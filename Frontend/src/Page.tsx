@@ -11,7 +11,6 @@ import Navbar from "./components/Navbar";
 function Page() {
   const location = useLocation()
   const isAuth = location.pathname == '/signup' || location.pathname =='/login' || location.pathname == '/'
-
   return (
     <>
     {!isAuth && <Navbar/>}

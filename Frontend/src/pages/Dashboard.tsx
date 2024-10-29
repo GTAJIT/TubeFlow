@@ -1,4 +1,10 @@
+import { useRecoilValue } from "recoil"
+import Video from "./Video"
+import { hamburger } from "../context/hamburger.atoms"
+import Sidebar from "../components/Sidebar"
+import '../styles/dashboard.css'
 function Dashboard() {
+  const isSidebarOpen = useRecoilValue(hamburger)
   return (
     <div>
       {/*
@@ -8,7 +14,16 @@ function Dashboard() {
       a avatar of my own
       */}
 
-      
+      <div className="dashboard__content">
+        {/* Conditionally render Sidebar based on state */}
+        {isSidebarOpen && <Sidebar />}
+
+        {/* Main content area with videos */}
+        <div className={`dashboard__videos ${isSidebarOpen ? "with-sidebar" : ""}`}>
+          <Video />
+          {/* Additional Video components or content */}
+        </div>
+      </div>
     </div>
   )
 }
