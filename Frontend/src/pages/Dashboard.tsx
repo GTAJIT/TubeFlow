@@ -15,13 +15,9 @@ function Dashboard() {
       */}
 
       <div className="dashboard__content">
-        {/* Conditionally render Sidebar based on state */}
         {isSidebarOpen && <Sidebar />}
-
-        {/* Main content area with videos */}
         <div className={`dashboard__videos ${isSidebarOpen ? "with-sidebar" : ""}`}>
           <Video />
-          {/* Additional Video components or content */}
         </div>
       </div>
     </div>
