@@ -1,0 +1,174 @@
+/* General Styling */
+.video-container {
+    color: #333;
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+/* Video Player Styling */
+.video-player-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    margin-bottom: 20px;
+    background-color: #000;
+    border-radius: 8px;
+}
+
+.video-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+/* Video Info */
+.video-info h2 {
+    font-size: 1.8rem;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.video-metadata {
+    color: #606060;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.video-action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.video-action-buttons button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    color: #065fd4;
+    background-color: #e7f0fb;
+    border: 1px solid #065fd4;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.video-action-buttons button:hover {
+    background-color: #065fd4;
+    color: #fff;
+}
+
+/* Comments Section Styling */
+.comments-section {
+    background-color: #f3f3f3;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 30px;
+}
+
+.comments-section h3 {
+    color: #333;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.comment-box {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.comment-box textarea {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    resize: none;
+}
+
+.comment-submit {
+    align-self: flex-end;
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    background-color: #065fd4;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.comment-submit:hover {
+    background-color: #0546a0;
+}
+
+/* Comments List */
+.comments-list {
+    margin-top: 20px;
+}
+
+.comment {
+    display: flex;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    border: 1px solid #e3e3e3;
+}
+
+.comment-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment-user {
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.comment-date {
+    font-size: 0.85rem;
+    color: #777;
+    margin-left: 5px;
+}
+
+.comment-text {
+    font-size: 0.95rem;
+    color: #444;
+    margin-top: 5px;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 8px;
+}
+
+.comment-actions button {
+    font-size: 0.8rem;
+    color: #065fd4;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.comment-actions button:hover {
+    color: #0546a0;
+}

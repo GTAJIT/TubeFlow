@@ -34,7 +34,7 @@ function Page() {
               </ProtectedRoute>
             }
           />
-          <Route path="/video/:videoId" element={<Video/>}></Route>
+          <Route path="/video/:id" element={<Video/>}></Route>
         </Routes>
     </>
   );

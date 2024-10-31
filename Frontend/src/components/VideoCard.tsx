@@ -1,28 +1,14 @@
 // VideoCard.tsx
 import React from 'react';
 import '../styles/channel.css';
-
-type VideoProps = {
-    id: number;
-    videoFile: string;
-    thumbnail: string;
-    title: string;
-    description: string;
-    duration: number; // Duration in seconds
-    views: number;
-    isPublished: boolean;
-    createdAt: string; // You might want to format this date
-    updatedAt: string; // You might want to format this date
-};
-
-type Props = {
-    videos: VideoProps[];
-};
+import { Link } from 'react-router-dom';
+import { Props } from '../types/video.types';
 
 const VideoCard: React.FC<Props> = ({ videos }) => {
     return (
         <div className="video-grid">
-            {videos.map((video) => (
+        {videos.map((video) => (
+        <Link to={`/video/${video.id}`} key={video.id} style={{textDecoration: 'none'}}>
                 <div key={video.id} className="video-card">
                     <img
                         src={video.thumbnail}
@@ -37,6 +23,7 @@ const VideoCard: React.FC<Props> = ({ videos }) => {
                         <p className="video-duration">{video.duration} min</p>
                     </div>
                 </div>
+        </Link>
             ))}
         </div>
     );
