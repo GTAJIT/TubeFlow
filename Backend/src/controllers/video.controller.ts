@@ -179,32 +179,17 @@ const deleteVideo = asyncHandler(async(req, res)=>{
 
 const getAllVideos = asyncHandler(async(req, res) => {
     try {
-        const { query, sortBy, sortType, userId } = req.query as {[name: string]: string};
-        
-        // Split the query into keywords
-        const searchQuery = query.split(' ');
-    
         const result = await prisma.video.findMany({
-            where: {
-                // Filter by userId if provided
-                // ...(userId && { userId }),
-                userId,
-                // Apply OR condition to search keywords
-                OR: searchQuery.map(keyword => ({
-                    title: {
-                        contains: keyword,
-                        mode: 'insensitive'
-                    }
-                }))
-            },
-            orderBy: {
-                [sortBy]: sortType // Correctly pass the field and sort type
+            where:{
+                isPublished: true
             }
-        });
-    
+        })
+
+        if(!result) throw new ApiError(400, "No video Found")
+
         res.status(200).json({
             result
-        });
+        })
     } catch (error) {
         throw new ApiError(400, "Can't Able to fetch videos")
     }

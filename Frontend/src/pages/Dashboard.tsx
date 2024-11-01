@@ -13,15 +13,14 @@ function Dashboard() {
   const [videoDetails, setVideoDetails] = useRecoilState(videoContext)
 
   useEffect(()=>{
-    const token = localStorage.getItem('token')
-    api.get('/video/get-all-videos?query=Javascript, C++, Python, Html',{
-      headers:{
-        Authorization: `Bearer ${token}`
-      }
-    })
+    // const token = localStorage.getItem('token')
+    api.get('/video/get-all-videos')
     .then((res)=>{
       // console.log(res.data.result)
       setVideoDetails(res.data.result)
+    })
+    .catch((err)=>{
+      <p>No videos Found</p>
     })
   }, [])
 
