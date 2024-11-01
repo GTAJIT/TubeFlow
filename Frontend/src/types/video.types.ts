@@ -9,6 +9,7 @@ type VideoProps = {
     isPublished: boolean;
     createdAt: string; // You might want to format this date
     updatedAt: string; // You might want to format this date
+    userId: string
 };
 
 export type Props = {

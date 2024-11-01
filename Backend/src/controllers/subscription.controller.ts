@@ -21,6 +21,7 @@ const getUserChannelSubscribers = asyncHandler(async(req, res)=>{
 })
 const toggleSubscription = asyncHandler(async(req, res)=>{
     const {channelId} = req.params;
+    let isSubscribed = false
     if(!channelId) throw new ApiError(404, "Channel Not found")
     if(req.userId == channelId){
         throw new ApiError(400, "You can't subscribe yourself")
@@ -33,12 +34,14 @@ const toggleSubscription = asyncHandler(async(req, res)=>{
     })
     if(!req.userId) throw new ApiError(400, "User not found")
         if(existingSubscriber) {
+            isSubscribed = false
             await prisma.subscription.delete({
                 where:{
                     id: existingSubscriber.id
                 }
             })
         } else{
+            isSubscribed = true
             await prisma.subscription.create({
                 data:{
                     channelId: channelId,
@@ -47,12 +50,13 @@ const toggleSubscription = asyncHandler(async(req, res)=>{
             })
     }
     res.json({
-        message:"Subscribed"
+        message: isSubscribed? "Subscribed": "Unsubscribed"
     })
 })
 
 const getSubscribedChannels = asyncHandler(async(req, res)=>{
     const {subscriberId} = req.params;
+    console.log(subscriberId)
     if(!subscriberId) throw new ApiError(400, "User not found")
     const existingSubscriber = await prisma.subscription.findMany({
         where:{

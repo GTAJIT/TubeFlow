@@ -7,8 +7,9 @@ import userProfile from '../../public/assets/user_profile.jpg';
 import '../styles/component_styles/navbar.css';
 import { useEffect, useState } from 'react';
 import api from '../services/api';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { hamburger } from '../context/hamburger.atoms';
+import { userIdContext } from '../context/auth.atoms';
 
 type UserDetails = {
   id: "";

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookie from 'js-cookie';
 import api from "../services/api";
-import { authState } from "../context/auth.atoms";
+import { userIdContext } from "../context/auth.atoms";
 import { useSetRecoilState } from "recoil";
 import '../styles/login.css';
 
@@ -14,7 +14,7 @@ function Login() {
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const setAuthUser = useSetRecoilState(authState);
+  const setUserId = useSetRecoilState(userIdContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -43,7 +43,7 @@ function Login() {
       Cookie.set('token', res.data.accessToken);
 
       // Update auth state
-      setAuthUser(res.data.userId);
+      setUserId(res.data.userId);
       localStorage.setItem('authUser', 'true');
       console.log("Auth state set to true. Navigating to /dashboard.");
 

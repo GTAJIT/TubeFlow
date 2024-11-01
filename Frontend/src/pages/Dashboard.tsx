@@ -3,7 +3,7 @@ import { hamburger } from "../context/hamburger.atoms"
 import Sidebar from "../components/Sidebar"
 import '../styles/dashboard.css'
 import VideoCard from "../components/VideoCard"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import api from "../services/api"
 import videoContext from "../context/videodetails.atom"
 

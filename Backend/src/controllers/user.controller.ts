@@ -76,7 +76,7 @@ const registerHandler = asyncHandler(async (req: Request, res: Response) => {
 
 const loginHandler = asyncHandler(async (req: Request, res: Response) => {
   const { success, data } = loginSchema.safeParse(req.body);
-  console.log(data)
+  console.log(data);
   if (!success) {
     throw new ApiError(400, "Bad Request");
   }
@@ -231,6 +231,27 @@ const getCurrentUser = asyncHandler(async (req: Request, res: Response) => {
   });
 });
 
+const getUserById = asyncHandler(async (req, res) => {
+  const userId = req.params.userId.toString()
+  console.log(userId);
+  const result = await prisma.user.findUnique({
+    where:{
+      id: userId
+    },
+    select:{
+      avatar: true,
+      fullName: true,
+      username: true
+    }
+  });
+
+  if (!result) throw new ApiError(404, "No Channel is found");
+
+  res.status(200).json({
+    result,
+  });
+});
+
 const updateUsername = asyncHandler(async (req: Request, res: Response) => {
   const { success, data } = updateUsernameSchema.safeParse(req.body);
   if (!success) {
@@ -323,22 +344,22 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
         channelId: user?.id,
       },
     });
-    
+
     const subcscribedChannelCount = await prisma.subscription.count({
       where: {
         subscriberId: user?.id,
-      }
+      },
     });
 
     // const subcscribedChannelCount = subcscribedChannel.length;
-    return{
+    return {
       subscribers: subscriberCount,
       subscribedChannels: subcscribedChannelCount,
-      user
+      user,
     };
   });
 
-  const {user, subscribedChannels, subscribers} = userDetails
+  const { user, subscribedChannels, subscribers } = userDetails;
   res.status(200).json({
     subscribers: subscribers,
     subscribed: subscribedChannels,
@@ -346,36 +367,36 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
     avatar: user.avatar,
     coverImage: user.coverImage,
     fullName: user.fullName,
-  })
+  });
 });
 
-const getWatchHistory = asyncHandler(async(req, res)=>{
-    const userId = req.userId  // Assuming the logged-in user's ID is available as `req.user.userId`
+const getWatchHistory = asyncHandler(async (req, res) => {
+  const userId = req.userId; // Assuming the logged-in user's ID is available as `req.user.userId`
 
-    // Fetch the user's watch history with the video details and the video owner's details
-    const userWatchHistory = await prisma.user.findUnique({
-        where: { id: userId },
-        select: {
-            watchHistory:true
-        }
-    });
+  // Fetch the user's watch history with the video details and the video owner's details
+  const userWatchHistory = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      watchHistory: true,
+    },
+  });
 
-    if (!userWatchHistory) {
-        throw new ApiError(404, 'User not found or watch history empty');
-    }
+  if (!userWatchHistory) {
+    throw new ApiError(404, "User not found or watch history empty");
+  }
 
-    res.status(200).json({
-        statusCode: 200,
-        data: userWatchHistory.watchHistory,
-        message: "Watch history fetched successfully",
-    });
-})
-
-const check = asyncHandler(async(req, res)=>{
   res.status(200).json({
-    message: "Authorized"
-  })
-})
+    statusCode: 200,
+    data: userWatchHistory.watchHistory,
+    message: "Watch history fetched successfully",
+  });
+});
+
+const check = asyncHandler(async (req, res) => {
+  res.status(200).json({
+    message: "Authorized",
+  });
+});
 
 export {
   registerHandler,
@@ -389,5 +410,6 @@ export {
   updateUserCoverImage,
   getUserChannelProfile,
   getWatchHistory,
-  check
+  check,
+  getUserById,
 };

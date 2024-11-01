@@ -13,6 +13,7 @@ const videoContext = atom({
         isPublished: false,
         createdAt: "", // You might want to format this date
         updatedAt: "", // You might want to format this date
+        userId: ""
     }]
 })
 

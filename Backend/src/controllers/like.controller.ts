@@ -122,4 +122,16 @@ const getLikedVideos = asyncHandler(async (req, res) => {
   })
 });
 
-export { toggleCommentLike, toggleTweetLike, toggleVideoLike, getLikedVideos };
+const getLikeById = asyncHandler(async(req, res)=>{
+  const videoId = parseInt(req.params.videoId)
+  const likeCount = await prisma.like.count({
+    where:{
+      videoId: videoId
+    }
+  })
+
+  res.json({
+    likeCount
+  })
+})
+export { toggleCommentLike, toggleTweetLike, toggleVideoLike, getLikedVideos, getLikeById };
