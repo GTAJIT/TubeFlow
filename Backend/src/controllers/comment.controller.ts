@@ -1,7 +1,6 @@
 import prisma from "../db/db";
 import { ApiError } from "../utils/ApiError";
 import { asyncHandler } from "../utils/AsyncHandler";
-import getUsernameById from "../utils/getUserById";
 import { getUserById } from "./user.controller";
 
 
