@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute
 import Channel from "./pages/Channel";
-import Video from "./pages/Video";
+import {Video} from "./pages/Video";
 import Navbar from "./components/Navbar";
 
 function Page() {

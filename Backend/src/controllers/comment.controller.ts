@@ -1,6 +1,8 @@
 import prisma from "../db/db";
 import { ApiError } from "../utils/ApiError";
 import { asyncHandler } from "../utils/AsyncHandler";
+import getUsernameById from "../utils/getUserById";
+import { getUserById } from "./user.controller";
 
 
 const addComments = asyncHandler(async(req, res)=>{
@@ -16,8 +18,19 @@ const addComments = asyncHandler(async(req, res)=>{
         }
     })
     if(!result) throw new ApiError(401, "Can't able to post it")
+    
+    const userDetails = await prisma.user.findUnique({
+        where:{
+            id: result.userId
+        },
+        select:{
+            username: true,
+            avatar: true
+        }
+    }) 
     res.json({
-        message: "Comment posted"
+        ...result,
+        userDetails
     })
 })
 
@@ -29,15 +42,32 @@ const getAllComments = asyncHandler(async(req, res)=>{
         where:{
             videoId: parseInt(videoId)
         },
-        select:{
-            content: true
-        },
         //@ts-ignore
         take: parseInt(limit)
     })
     if(!comments) throw new ApiError(400, "No comments found")
+    const commentDetails = await Promise.all(
+    comments.map(async(item)=>{
+        const username = await prisma.user.findUnique({
+            where:{
+                id: req.userId
+            },
+            select:{
+                username: true,
+                avatar: true
+            }
+        })
+        return {
+            ...item,
+            username
+        }
+    })
+    )
+    console.log(commentDetails)
+    
     res.json({
-        comments
+        // commentDetails
+        commentDetails,
     })
 })
 const updateComments = asyncHandler(async(req, res)=>{

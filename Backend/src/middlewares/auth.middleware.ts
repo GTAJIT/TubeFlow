@@ -20,6 +20,6 @@ export const verifyJWT = async (req: Request, res: Response, next: NextFunction)
     
         next()
     } catch (error: any) {
-        throw new ApiError(401, error)
+        res.status(401).json({ message: "Invalid Token" });
     }
 }   

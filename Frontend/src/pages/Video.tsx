@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { HTMLInputTypeAttribute, useEffect, useState } from "react";
 import api from "../services/api";
 import "../styles/video.css";
 
@@ -24,34 +24,19 @@ const Video = () => {
 
   const [likeCount, setLikeCount] = useState(0);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [comment, setComment] = useState([
+    {
+      content: "",
+      userId: "",
+      username: {
+        username: "",
+        avatar: "",
+      },
+    },
+  ]);
+
   const [subscriberCount, setSubscriberCount] = useState(0);
-  // Fetch video details and like count
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchData = async () => {
-      try {
-        const videoRes = await api.get(`/video/get-video/${id}`);
-        setVideo(videoRes.data.result);
-
-        const likeRes = await api.get(`/like/video/${id}`);
-        setLikeCount(likeRes.data.likeCount);
-
-        const subsRes = await api.get(
-          `/subscription/get-subscribers/${video.userId}`
-        );
-        // console.log(subsRes.data.existingChannel)
-        // setSubscriberCount(subsRes.data)
-        setSubscriberCount(subsRes.data.existingChannel.length);
-      } catch (error) {
-        console.error("Error fetching video data:", error);
-      }
-    };
-
-    fetchData();
-  }, [id, video.userId]);
-
-  // Fetch channel details and check subscription status
+  const [addComment, setAddComment] = useState("");
   useEffect(() => {
     if (!video.userId) return;
 
@@ -62,9 +47,7 @@ const Video = () => {
         );
         setChannelDetails(channelRes.data.result);
 
-        // Get the current user details to check subscription
         const userRes = await api.get("/user/get-current-user");
-
         const subscriptionRes = await api.get(
           `/subscription/get-subscribed-channels/${userRes.data.user.id}`
         );
@@ -81,6 +64,34 @@ const Video = () => {
 
     fetchChannelDetails();
   }, [video.userId]);
+  // Fetch video details and like count
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchData = async () => {
+      try {
+        const videoRes = await api.get(`/video/get-video/${id}`);
+        setVideo(videoRes.data.result);
+
+        const likeRes = await api.get(`/like/video/${id}`);
+        setLikeCount(likeRes.data.likeCount);
+      
+        const subsRes = await api.get(`/user/c/${channelDetails.username}`)
+        // console.log(subsRes.data  )
+        setSubscriberCount(subsRes.data.subscribers)
+
+        const commentRes = await api.get(`/comment/all/${video.id}?limit=10`);
+        console.log(commentRes.data);
+        setComment(commentRes.data.commentDetails || []);
+      } catch (error) {
+        console.error("Error fetching video data:", error);
+      }
+    };
+
+    fetchData();
+  }, [id, video.userId, channelDetails]);
+
+  // Fetch channel details and check subscription status
 
   // Like button handler
   const handleLike = async () => {
@@ -101,9 +112,30 @@ const Video = () => {
         `/subscription/toggle-subscription/${video.userId}`
       );
       setIsSubscribed(res.data.message === "Subscribed");
+      setSubscriberCount((prevCount) =>
+        res.data.message === "Subscribed" ? prevCount + 1 : prevCount - 1
+      );
     } catch (error) {
       console.error("Error toggling subscription:", error);
     }
+  };
+  //@ts-ignore
+  const handleComment = async () => {
+    const res = await api.post(`/comment/add/${video.id}`, {
+      comment: addComment,
+    });
+    const newComment = 
+    {
+      content: res.data.content,
+      userId: res.data.userId,
+      username: {
+        username: res.data.userDetails.username,
+        avatar: res.data.userDetails.avatar,
+      },
+    }
+    
+    setAddComment("")
+    setComment((prev)=>[...prev, newComment])
   };
 
   return (
@@ -157,32 +189,43 @@ const Video = () => {
           <textarea
             placeholder="Add a public comment..."
             className="comment-input"
+            value={addComment}
+            onChange={(e) => {
+              setAddComment(e.target.value);
+            }}
           />
-          <button className="comment-submit">Comment</button>
+          <button className="comment-submit" onClick={handleComment}>
+            Comment
+          </button>
         </div>
         <div className="comments-list">
-          {/* Example Comment */}
-          <div className="comment">
-            <div className="comment-avatar">
-              <img src="https://via.placeholder.com/40" alt="User Avatar" />
-            </div>
-            <div className="comment-content">
-              <p className="comment-user">
-                User1 <span className="comment-date">2 days ago</span>
-              </p>
-              <p className="comment-text">
-                This is a sample comment to demonstrate the layout.
-              </p>
-              <div className="comment-actions">
-                <button>👍 Like</button>
-                <button>Reply</button>
+          {comment.map((item, index) => (
+            <div className="comment" key={index}>
+              <div className="comment-avatar">
+                <img
+                  src={
+                    item.username?.avatar || "https://via.placeholder.com/40"
+                  }
+                  alt="User Avatar"
+                />
+              </div>
+              <div className="comment-content">
+                <p className="comment-user">
+                  {item.username?.username || "Unknown User"}{" "}
+                  <span className="comment-date">2 days ago</span>
+                </p>
+                <p className="comment-text">{item.content}</p>
+                <div className="comment-actions">
+                  <button>👍 Like</button>
+                  <button>Reply</button>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
   );
 };
 
-export default Video;
+export { Video };
