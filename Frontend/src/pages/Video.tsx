@@ -21,7 +21,6 @@ const Video = () => {
     username: "",
     fullName: "",
   });
-  const [commentLikeCount, setCommentLikeCount] = useState(0)
   const [likeCount, setLikeCount] = useState(0);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [comment, setComment] = useState([
