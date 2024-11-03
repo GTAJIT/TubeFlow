@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { HTMLInputTypeAttribute, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../services/api";
 import "../styles/video.css";
 
@@ -21,13 +21,15 @@ const Video = () => {
     username: "",
     fullName: "",
   });
-
+  const [commentLikeCount, setCommentLikeCount] = useState(0)
   const [likeCount, setLikeCount] = useState(0);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [comment, setComment] = useState([
     {
+      id: 0,
       content: "",
       userId: "",
+      likes: 0,
       username: {
         username: "",
         avatar: "",
@@ -92,7 +94,6 @@ const Video = () => {
   }, [id, video.userId, channelDetails]);
 
   // Fetch channel details and check subscription status
-
   // Like button handler
   const handleLike = async () => {
     try {
@@ -126,8 +127,10 @@ const Video = () => {
     });
     const newComment = 
     {
+      id: res.data.id,
       content: res.data.content,
       userId: res.data.userId,
+      likes: res.data.likes,
       username: {
         username: res.data.userDetails.username,
         avatar: res.data.userDetails.avatar,
@@ -137,7 +140,24 @@ const Video = () => {
     setAddComment("")
     setComment((prev)=>[...prev, newComment])
   };
-
+  //@ts-ignore
+  const handleCommentLike = async(e)=>{
+    // console.log(e.target.value)
+    const commentId =e.target.value
+    const res = await api.post(`/like/toggle/c/${commentId}`)
+    
+      setComment((prevComment)=>(
+        prevComment.map((comment)=>(
+          comment.id == commentId ? 
+          {
+          ...comment,
+          likes: res.data.message == "Comment Liked"? comment.likes+1 : comment.likes-1
+          }
+          : comment
+        ))
+      ))
+  }
+  
   return (
     <div className="video-container">
       <div className="video-player-wrapper">
@@ -216,7 +236,7 @@ const Video = () => {
                 </p>
                 <p className="comment-text">{item.content}</p>
                 <div className="comment-actions">
-                  <button>👍 Like</button>
+                  <button onClick={handleCommentLike} value={item.id}>👍 Like({item.likes})</button>
                   <button>Reply</button>
                 </div>
               </div>

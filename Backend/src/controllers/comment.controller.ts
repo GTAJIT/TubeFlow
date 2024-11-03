@@ -46,18 +46,24 @@ const getAllComments = asyncHandler(async(req, res)=>{
     })
     if(!comments) throw new ApiError(400, "No comments found")
     const commentDetails = await Promise.all(
-    comments.map(async(item)=>{
+    comments.map(async(comment)=>{
         const username = await prisma.user.findUnique({
             where:{
-                id: req.userId
+                id: comment.userId
             },
             select:{
                 username: true,
                 avatar: true
             }
         })
+        const likes = await prisma.like.count({
+            where:{
+                commentId: comment.id
+            }
+        })
         return {
-            ...item,
+            ...comment,
+            likes,
             username
         }
     })
