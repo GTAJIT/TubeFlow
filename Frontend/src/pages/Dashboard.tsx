@@ -19,7 +19,7 @@ function Dashboard() {
       // console.log(res.data.result)
       setVideoDetails(res.data.result)
     })
-    .catch((err)=>{
+    .catch(()=>{
       <p>No videos Found</p>
     })
   }, [])

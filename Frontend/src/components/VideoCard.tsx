@@ -20,7 +20,7 @@ const VideoCard: React.FC<Props> = ({ videos }) => {
                         <p className="video-description">{video.description}</p>
                         <p className="video-views">{video.views} views</p>
                         <p className="video-date">{new Date(video.createdAt).toLocaleDateString()}</p>
-                        <p className="video-duration">{video.duration} min</p>
+                        <p className="video-duration">{video.duration} secs</p>
                     </div>
                 </div>
         </Link>

@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRou
 import Channel from "./pages/Channel";
 import {Video} from "./pages/Video";
 import Navbar from "./components/Navbar";
+import UploadVideo from "./pages/UploadVideo";
 
 function Page() {
   const location = useLocation()
@@ -34,7 +35,16 @@ function Page() {
               </ProtectedRoute>
             }
           />
-          <Route path="/video/:id" element={<Video/>}></Route>
+          <Route path="/video/:id" element={
+            <ProtectedRoute>
+            <Video/>
+            </ProtectedRoute>
+          }></Route>
+          <Route path="/upload" element={
+            <ProtectedRoute>
+              <UploadVideo/>
+            </ProtectedRoute>
+          }></Route>
         </Routes>
     </>
   );

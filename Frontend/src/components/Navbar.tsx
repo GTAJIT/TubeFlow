@@ -10,6 +10,7 @@ import api from '../services/api';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { hamburger } from '../context/hamburger.atoms';
 import { userIdContext } from '../context/auth.atoms';
+import { useNavigate } from 'react-router-dom';
 
 type UserDetails = {
   id: "";
@@ -37,6 +38,7 @@ const [userDetails, setUserDetails] = useState<UserDetails>({
   createdAt: "",
   updatedAt: ""
 })
+const navigation = useNavigate()
 const setHamburger = useSetRecoilState(hamburger)
   useEffect(()=>{
     const token = localStorage.getItem('token')
@@ -68,7 +70,9 @@ const setHamburger = useSetRecoilState(hamburger)
 
       <div className="navbar__right">
         <button className="navbar__icon-button">
-          <img src={upload} alt="Upload Icon" className="navbar__icon" />
+          <img src={upload} alt="Upload Icon" className="navbar__icon" onClick={()=>{
+            navigation('/upload')
+          }}/>
         </button>
         <button className="navbar__icon-button">
           <img src={userDetails.avatar || userProfile} alt="User Profile" className="navbar__profile-img" />

@@ -39,7 +39,9 @@ const uploadVideo = asyncHandler(async(req, res)=>{
             message: result
         })
     } catch (error) {
-        throw new ApiError(404, "Somthing went wrong")
+        console.log(error)
+        //@ts-ignore
+        throw new ApiError(404, error)
     }
 })
 
