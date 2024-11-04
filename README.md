@@ -37,7 +37,7 @@ npm install
 ```
 
 ### 3. Set up Docker for PostgreSQL:
-Ensure Docker is installed, and set up PostgreSQL by running:
+Ensure Docker is installed, and set up PostgreSQL by running (make sure if you are running this locally then run backend locally otherwise it doens't work):
 ```bash
 docker run -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres
 ```
@@ -45,7 +45,7 @@ docker run -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres
 ### 4. Configure environment variables:
 Create a `.env` file and set up the following environment variables:
 ```plaintext
-DATABASE_URL="postgresql://user:password@localhost:5432/tubeflow"
+DATABASE_URL="postgresql://user:password@localhost:5432/tubeflow" (Best practice: Change this to any cloud database e.g. NeonDB)
 PORT=5000
 CORS_ORIGIN="http://localhost:5173"
 JWT_SECRET=
