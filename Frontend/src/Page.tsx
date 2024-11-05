@@ -28,7 +28,7 @@ function Page() {
             }
           />
           <Route
-            path="/channel"
+            path="/channel/:username"
             element={
               <ProtectedRoute>
                 <Channel />

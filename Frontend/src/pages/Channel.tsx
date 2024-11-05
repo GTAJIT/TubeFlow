@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import '../styles/channel.css';
 import api from '../services/api';
+import { useParams } from 'react-router-dom';
 
 const Channel = () => {
+    const {username} = useParams()
     const [channelDetails, setChannelDetails] = useState({
+        id: "",
         subscribers: "",
         subscribed: "",
         username: "",
@@ -12,20 +15,41 @@ const Channel = () => {
         fullName: ""
     })
     
+    const [isSubscribed, setIsSubscribed] = useState(false)
+    const [clientUserId, setClientUserId] = useState("")
     useEffect(()=>{
-        api.get('/user/c/mohak')
+        api.get(`/user/c/${username}`)
         .then((res)=>{
             setChannelDetails(res.data)
         })
         .catch((error)=>{
             console.log(error)
         })
-        
+    }, [username])
+  
+    useEffect(()=>{
+      api.get("/user/get-current-user")
+      .then((res)=>{
+        setClientUserId(res.data.user.id)
+      })
     }, [])
+    useEffect(()=>{
+      
+      api.get(
+        `/subscription/get-subscribed-channels/${clientUserId}`
+      ).then((res)=>{
+        //@ts-ignore
+        const result = res.data.existingSubscriber.some((item)=>item.channelId == channelDetails.id)
+
+        setIsSubscribed(result)
+      })
+    }, [clientUserId, channelDetails.id])
   return (
     <div className="channel-container">
       <div className="channel-header">
-        <div className="channel-banner"></div>
+        <div className="channel-banner">
+          {/* [TODO]: Create a Channel Banner Cover Image  */}
+        </div>
         <div className="channel-info">
           <img
             src={channelDetails.avatar}
@@ -39,10 +63,11 @@ const Channel = () => {
             <p className="channel-description">
               Welcome to my channel! Here you'll find amazing content about various topics. Don't forget to subscribe!
             </p>
-            <button className="subscribe-button">Subscribe</button>
+            <button className={isSubscribed?"subscribed-button":"subscribe-button"}>{isSubscribed ? "Subscribed": "Subscribe"}</button>
           </div>
         </div>
       </div>
+        {/* [TODO]: Create a Home, Videos, Playlist, Tweets section */}
       
       
     </div>

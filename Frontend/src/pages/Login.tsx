@@ -46,7 +46,6 @@ function Login() {
       setUserId(res.data.userId);
       localStorage.setItem('authUser', 'true');
       console.log("Auth state set to true. Navigating to /dashboard.");
-
       // Separate the navigation call for clarity
       navigate("/dashboard");
 

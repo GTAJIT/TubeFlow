@@ -1,7 +1,7 @@
 import {atom } from "recoil";
 
 const userIdContext = atom({
-    key: "authState",
+    key: "userIdContext",
     default: ""
 })
 export {

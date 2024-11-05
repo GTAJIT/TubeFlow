@@ -361,6 +361,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
 
   const { user, subscribedChannels, subscribers } = userDetails;
   res.status(200).json({
+    id: user.id,
     subscribers: subscribers,
     subscribed: subscribedChannels,
     username: user.username,

@@ -16,8 +16,8 @@ function Dashboard() {
     // const token = localStorage.getItem('token')
     api.get('/video/get-all-videos')
     .then((res)=>{
-      // console.log(res.data.result)
-      setVideoDetails(res.data.result)
+      // console.log(res.data.videoDetails)
+      setVideoDetails(res.data.videoDetails)
     })
     .catch(()=>{
       <p>No videos Found</p>

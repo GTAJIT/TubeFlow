@@ -188,9 +188,27 @@ const getAllVideos = asyncHandler(async(req, res) => {
         })
 
         if(!result) throw new ApiError(400, "No video Found")
+        // const username = await prisma.user.findUnique({
+        //     where:{
+        //         userId: result.userId
+        //     }
+        // })
+        const videoDetails = await Promise.all(result.map(async (item)=>{
+            const username = await prisma.user.findUnique({
+                where:{
+                    id: item.userId
+                },
+                select:{
+                    username: true
+                }
+            })
 
+            return {...item, username: username?.username}
+        }))
+
+        // console.log(usernameDetails)
         res.status(200).json({
-            result
+            videoDetails
         })
     } catch (error) {
         throw new ApiError(400, "Can't Able to fetch videos")
