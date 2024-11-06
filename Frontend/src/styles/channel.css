@@ -116,4 +116,19 @@ body {
     margin: 5px 0;
     font-size: 14px; /* Adjusted font size */
   }
-  
+  .option-group{
+    display: flex;
+    gap: 24px;
+  }
+  .options{
+    transition: 0.2s ;
+    cursor: pointer;
+  }
+.option-group .options:hover{
+  color: black;
+  transform: scale(1.1);
+}
+.channel-banner img{
+  width: 100%;
+  height: 100%;
+}
