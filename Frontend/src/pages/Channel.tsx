@@ -44,11 +44,14 @@ const Channel = () => {
         setIsSubscribed(result)
       })
     }, [clientUserId, channelDetails.id])
+
+    const [content, setContent] = useState(false)
+   
   return (
     <div className="channel-container">
       <div className="channel-header">
         <div className="channel-banner">
-          {/* [TODO]: Create a Channel Banner Cover Image  */}
+          <img src="https://img.lovepik.com/background/20211021/large/lovepik-cool-line-technology-banner-background-image_400112106.jpg" alt="" />
         </div>
         <div className="channel-info">
           <img
@@ -68,6 +71,21 @@ const Channel = () => {
         </div>
       </div>
         {/* [TODO]: Create a Home, Videos, Playlist, Tweets section */}
+
+        <hr />
+        <div className='outer-div'>
+        <div className='option-group'>
+          <div onClick={()=> setContent(!content)} className="options">Home</div>
+          <div onClick={()=> setContent(!content)} className="options">Videos</div>
+          <div onClick={()=> setContent(!content)} className="options">Playlist</div>
+          <div onClick={()=> setContent(!content)} className="options">Tweets section</div>
+          <div className="inner-content">
+          </div>
+        </div>
+
+
+        {content ? 'content' : ''}
+        </div>
       
       
     </div>
