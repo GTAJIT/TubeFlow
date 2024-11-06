@@ -33,6 +33,10 @@ cd tubeflow
 
 ### 2. Install dependencies:
 ```bash
+cd Frontend
+npm install
+cd..
+cd Backend
 npm install
 ```
 
@@ -57,7 +61,7 @@ CLOUDINARY_API_KEY=
 CLOUDINARY_CLOUD_NAME=
 ```
 
-### 5. Run the application:
+### 5. Run the application in both frontend and backend:
 ```bash
 npm run dev
 ```
