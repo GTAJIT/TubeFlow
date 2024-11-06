@@ -19,6 +19,7 @@ Thank you for your interest in contributing to TubeFlow! We welcome contribution
     ```
 5. Create a new branch for your contribution:
     ```
+    git branch feature/your-feature-name
     git checkout -b feature/your-feature-name
     ```
 
