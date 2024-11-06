@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
 import '../styles/channel.css';
 import api from '../services/api';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import ChannelHome from '../components/Channel/ChannelHome';
+import ChannelVideos from '../components/Channel/ChannelVideos';
+import Playlist from '../components/Channel/Playlist';
+import Tweet from '../components/Channel/Tweet';
 
 const Channel = () => {
     const {username} = useParams()
+    const navigate = useNavigate()
     const [channelDetails, setChannelDetails] = useState({
         id: "",
         subscribers: "",
@@ -14,7 +19,12 @@ const Channel = () => {
         coverImage: "",
         fullName: ""
     })
-    
+    const [content, setContent] = useState({
+      Home: true,
+      Videos: false,
+      Tweets: false,
+      Playlists: false
+    })
     const [isSubscribed, setIsSubscribed] = useState(false)
     const [clientUserId, setClientUserId] = useState("")
     useEffect(()=>{
@@ -45,7 +55,6 @@ const Channel = () => {
       })
     }, [clientUserId, channelDetails.id])
 
-    const [content, setContent] = useState(false)
    
   return (
     <div className="channel-container">
@@ -75,16 +84,20 @@ const Channel = () => {
         <hr />
         <div className='outer-div'>
         <div className='option-group'>
-          <div onClick={()=> setContent(!content)} className="options">Home</div>
-          <div onClick={()=> setContent(!content)} className="options">Videos</div>
-          <div onClick={()=> setContent(!content)} className="options">Playlist</div>
-          <div onClick={()=> setContent(!content)} className="options">Tweets section</div>
+          <div onClick={()=>setContent({...content, Home: true,  Videos: false, Playlists: false, Tweets: false})} className="options">Home</div>
+          <div onClick={()=>setContent({...content, Videos: true, Home: false, Playlists: false, Tweets: false})} className="options">Videos</div>
+          <div onClick={()=>setContent({...content, Playlists: true,  Home: false, Videos: false, Tweets: false})} className="options">Playlist</div>
+          <div onClick={()=>setContent({...content, Tweets: true,  Home: false, Playlists: false, Videos: false})}className="options">Tweets section</div>
           <div className="inner-content">
           </div>
         </div>
 
-
-        {content ? 'content' : ''}
+        <div className='video-section'>
+            {content.Home ? <ChannelHome/>: ""}
+            {content.Videos ? <ChannelVideos id={channelDetails.id}/>: ""}
+            {content.Playlists ? <Playlist/>: ""}
+            {content.Tweets ? <Tweet/>: ""}
+        </div>
         </div>
       
       

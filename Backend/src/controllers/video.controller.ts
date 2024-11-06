@@ -1,3 +1,4 @@
+import { tuple } from "zod";
 import prisma from "../db/db";
 import { deleteFilePath } from "../middlewares/multer.middleware";
 import { ApiError } from "../utils/ApiError";
@@ -230,6 +231,32 @@ const watchHistory = asyncHandler(async(req, res)=>{
         message: "Added to watch history"
     })
 })
+
+const getVideosOfChannel = asyncHandler(async(req, res)=>{
+    try {
+        const {id} = req.params;
+        const result = await prisma.video.findMany({
+            where:{
+                userId: id
+            },
+            select:{
+                id: true,
+                title: true,
+                thumbnail: true,
+                views: true
+            }
+        })
+        if(!result) throw new ApiError(400, "No video found")
+
+        res.status(200).json({
+            result
+        })
+    
+    } catch (error: any) {
+        throw new ApiError(400, error)
+    }
+    
+})
 export {
     uploadVideo,
     togglePublishStatus,
@@ -237,5 +264,6 @@ export {
     updateVideo,
     deleteVideo,
     getAllVideos,
-    watchHistory
+    watchHistory,
+    getVideosOfChannel
 }

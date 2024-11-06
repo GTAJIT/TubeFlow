@@ -8,6 +8,7 @@ import Channel from "./pages/Channel";
 import {Video} from "./pages/Video";
 import Navbar from "./components/Navbar";
 import UploadVideo from "./pages/UploadVideo";
+import ChannelHome from "./components/Channel/ChannelHome";
 
 function Page() {
   const location = useLocation()
@@ -43,6 +44,11 @@ function Page() {
           <Route path="/upload" element={
             <ProtectedRoute>
               <UploadVideo/>
+            </ProtectedRoute>
+          }></Route>
+          <Route path="/channel/:username/home" element={
+            <ProtectedRoute>
+              <ChannelHome/>
             </ProtectedRoute>
           }></Route>
         </Routes>
