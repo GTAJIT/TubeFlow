@@ -4,7 +4,7 @@ This project, **TubeFlow**, is a full-stack implementation of a YouTube-like pla
 
 ## Contributing
 
-We welcome contributions to TubeFlow! Please read our [Contributing Guidelines](https://github.com/MohakGupta2004/TubeFlow/blob/main/CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) for more details on how to get started.
+We welcome contributions to TubeFlow! Please read our [Contributing Guidelines]() and [Code of Conduct](CODE_OF_CONDUCT.md) for more details on how to get started.
 
 ## 🚀 Features
 
