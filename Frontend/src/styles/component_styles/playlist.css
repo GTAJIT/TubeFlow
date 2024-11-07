@@ -1,0 +1,31 @@
+.playlist-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 20px;
+  }
+  
+  .playlist-card {
+    width: 200px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s;
+  }
+  
+  .playlist-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .playlist-card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  
+  .playlist-card p {
+    font-size: 14px;
+    color: #666;
+  }
+  

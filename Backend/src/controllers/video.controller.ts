@@ -237,7 +237,8 @@ const getVideosOfChannel = asyncHandler(async(req, res)=>{
         const {id} = req.params;
         const result = await prisma.video.findMany({
             where:{
-                userId: id
+                userId: id,
+                isPublished: true
             },
             select:{
                 id: true,
