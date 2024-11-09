@@ -12,73 +12,90 @@ import {
   updateUsernameSchema,
   passwordSchema,
 } from "../zod_schema/user.schema";
-interface TokenInterface {
-  userId: string;
-}
-
+import { RequestedFiles, TokenInterface } from "../types/user.types";
 const options = {
   httpOnly: true,
   secure: true,
 };
 
-const registerHandler = asyncHandler(async (req: Request, res: Response) => {
-  if (!req.body) {
-    return res.status(400).json({ message: "Request body is required." });
-  }
-
-  const files = req.files as { [fieldname: string]: Express.Multer.File[] };
-  const avatarPath = files.avatar[0].path;
-  const coverImagePath = files.coverImage[0].path || "NULL";
-  const { success, data } = registrationSchema.safeParse(req.body);
-  if (!success) {
-    return res.status(400).json({
-      success,
-      // Optional: return validation errors
+const registerHandler = asyncHandler(async (req: Request, res: Response): Promise<void> => {
+  try {
+    if (!req.body) {
+      res.status(400).json({ message: "Request body is required." });
+      return;
+    }
+    if(!req.files){
+      res.status(400).json({
+        message: "No Files Uploaded"
+      })
+      return;
+    }
+  
+    const files = req.files as RequestedFiles;
+    console.log(files)
+    const avatarPath = files?.avatar[0]?.path;
+    const coverImagePath = files?.coverImage[0]?.path || "";
+    const { success, data } = registrationSchema.safeParse(req.body);
+    if (!success) {
+      res.status(400).json({
+        success,
+        message: "Invalid Email Address"
+      });
+      return;
+    }
+    
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        OR:[
+          {username: data.username},
+          {email: data.email},
+        ]
+      },
     });
-  }
-
-  const existingUser = await prisma.user.findUnique({
-    where: {
-      username: data.username,
-      email: data.email,
-    },
-  });
-
-  if (existingUser) {
-    throw new ApiError(409, "User already exists");
-  }
-  const hashedPassword: string = await bcrypt.hash(data.password, 10);
-  const avatar = await uploadOnCloudinary(avatarPath);
-  console.log(avatar);
-  const coverImage = await uploadOnCloudinary(coverImagePath);
-  if (!avatar) {
-    throw new ApiError(409, "Avatar not found");
-  }
-  const result = await prisma.user.create({
-    data: {
-      username: data.username,
-      email: data.email,
-      password: hashedPassword,
-      avatar: avatar,
-      coverImage: coverImage || "",
-      fullName: data.fullName,
-      refreshToken: "",
-    },
-  });
-
-  if (result) {
-    res.json({
-      message: "User Created Successfully",
-      result,
+    
+    if (existingUser) {
+      throw new ApiError(409, "User already exists");
+    }
+    const hashedPassword: string = await bcrypt.hash(data.password, 10);
+    const avatar = await uploadOnCloudinary(avatarPath);
+    // console.log(avatar);
+    if (!avatar) {
+      throw new ApiError(409, "Avatar not found");
+    }
+    const coverImage = await uploadOnCloudinary(coverImagePath);
+    const result = await prisma.user.create({
+      data: {
+        username: data.username,
+        email: data.email,
+        password: hashedPassword,
+        avatar: avatar,
+        coverImage: coverImage || "",
+        fullName: data.fullName,
+        refreshToken: "",
+      },
     });
+  
+    if (result) {
+      res.json({
+        message: "User Created Successfully",
+        result,
+      });
+    }
+  } catch (error) {
+    console.log(error)
+    if (error instanceof ApiError) {
+      res.status(error.statusCode).json({ success: false, message: error.message });
+    } else {
+      res.status(500).json({success: false, message: "An Error had occurred during registration"})
+    }
   }
 });
 
-const loginHandler = asyncHandler(async (req: Request, res: Response) => {
+const loginHandler = asyncHandler(async (req: Request, res: Response): Promise<void> => {
   const { success, data } = loginSchema.safeParse(req.body);
-  console.log(data);
+  // console.log(data);
   if (!success) {
-    throw new ApiError(400, "Bad Request");
+    throw new ApiError(400, "Bad Request - Invalid Input");
   }
   const { username, password, email } = data;
   const user = await prisma.user.findUnique({
@@ -90,7 +107,7 @@ const loginHandler = asyncHandler(async (req: Request, res: Response) => {
   if (!user) {
     throw new ApiError(404, "User not found");
   }
-  const isPasswordValid = await bcrypt.compare(password, user.password);
+  const isPasswordValid: boolean = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
     throw new ApiError(401, "Invalid Password");
   }
@@ -110,7 +127,7 @@ const loginHandler = asyncHandler(async (req: Request, res: Response) => {
     });
 });
 
-const logoutHandler = asyncHandler(async (req: Request, res: Response) => {
+const logoutHandler = asyncHandler(async (req: Request, res: Response): Promise<void> => {
   const userId = req.userId;
   const user = await prisma.user.findUnique({
     where: { id: userId },
@@ -140,7 +157,7 @@ const logoutHandler = asyncHandler(async (req: Request, res: Response) => {
     });
 });
 
-const refreshAccessToken = asyncHandler(async (req: Request, res: Response) => {
+const refreshAccessToken = asyncHandler(async (req: Request, res: Response): Promise<void> => {
   const incomingRefreshToken =
     req.cookies.refreshToken || req.body.refreshToken;
   console.log(incomingRefreshToken);

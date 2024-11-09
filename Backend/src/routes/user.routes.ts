@@ -13,7 +13,7 @@ router.route('/register').post(upload.fields([{
 }]),registerHandler)
 router.route('/login').post(loginHandler)
 router.route('/logout').post(verifyJWT, logoutHandler)
-router.route('/refresh-token').post(refreshAccessToken)
+router.route('/refresh-access-token').post(refreshAccessToken)
 router.route('/update-password').post(verifyJWT, updatePassword)
 router.route('/update-username').post(verifyJWT, updateUsername)
 router.route('/get-current-user').get(verifyJWT, getCurrentUser)
