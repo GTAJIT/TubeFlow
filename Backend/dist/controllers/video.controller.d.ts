@@ -1,0 +1,9 @@
+declare const uploadVideo: (req: import("express").Request, res: import("express").Response, next: import("express").NextFunction) => void;
+declare const togglePublishStatus: (req: import("express").Request, res: import("express").Response, next: import("express").NextFunction) => void;
+declare const getVideoById: (req: import("express").Request, res: import("express").Response, next: import("express").NextFunction) => void;
+declare const updateVideo: (req: import("express").Request, res: import("express").Response, next: import("express").NextFunction) => void;
+declare const deleteVideo: (req: import("express").Request, res: import("express").Response, next: import("express").NextFunction) => void;
+declare const getAllVideos: (req: import("express").Request, res: import("express").Response, next: import("express").NextFunction) => void;
+declare const watchHistory: (req: import("express").Request, res: import("express").Response, next: import("express").NextFunction) => void;
+declare const getVideosOfChannel: (req: import("express").Request, res: import("express").Response, next: import("express").NextFunction) => void;
+export { uploadVideo, togglePublishStatus, getVideoById, updateVideo, deleteVideo, getAllVideos, watchHistory, getVideosOfChannel };

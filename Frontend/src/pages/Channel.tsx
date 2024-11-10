@@ -95,7 +95,7 @@ const Channel = () => {
         <div className='video-section'>
             {content.Home ? <ChannelHome/>: ""}
             {content.Videos ? <ChannelVideos id={channelDetails.id}/>: ""}
-            {content.Playlists ? <Playlist id={channelDetails.id}/>: ""}
+            {content.Playlists ? <Playlist id={channelDetails.id} clientId = {clientUserId}/>: ""}
             {content.Tweets ? <Tweet/>: ""}
         </div>
         </div>

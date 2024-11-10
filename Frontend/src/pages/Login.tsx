@@ -40,8 +40,9 @@ function Login() {
 
       // Store token if available
       localStorage.setItem('token', res.data.accessToken);
+      localStorage.setItem("refreshToken", res.data.refreshToken);
       Cookie.set('token', res.data.accessToken);
-
+      Cookie.set('refreshToken', res.data.refreshToken)
       // Update auth state
       setUserId(res.data.userId);
       localStorage.setItem('authUser', 'true');

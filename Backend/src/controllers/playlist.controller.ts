@@ -12,9 +12,10 @@ const createPlaylist = asyncHandler(async (req, res) => {
       userId: req.userId,
     },
   });
+  console.log(result)
   if (!result) throw new ApiError(400, "Unable to create playlist");
   res.status(200).json({
-    message: "Playlist Created",
+    result
   });
 });
 
@@ -22,37 +23,40 @@ const getUserPlaylists = asyncHandler(async (req, res) => {
     const { userId } = req.params;
   
     // Get user playlists
-    const result = await prisma.playlist.findMany({
+    const playlists = await prisma.playlist.findMany({
       where: { userId },
     });
   
-    if (!result || result.length === 0) {
+    if (!playlists || playlists.length === 0) {
       return res.status(404).json({ message: "No Playlist Found" });
     }
   
     // Get the first video in the first playlist (if any)
-    const video = await prisma.playlistVideo.findFirst({
-      where: { playlistId: result[0].id },
-    });
-  
-    if (!video) {
-      return res.status(200).json(result);
-    }
-  
-    // Fetch the thumbnail for the first video
-    const firstVideo = await prisma.video.findUnique({
-      where: { id: video.videoId },
-      select: { thumbnail: true },
-    });
-  
-    // Attach the thumbnail to each playlist in the result
-    const finalResult = result.map((details) => ({
-      ...details,
-      firstVideo,
-    }));
+    const video = await Promise.all(
+      playlists.map(async(playlist)=>{
+        const result = await prisma.playlistVideo.findFirst({
+          where:{playlistId: playlist.id },
+          orderBy: {id: 'asc'},
+        })
+        if(!result) return {...playlist, firstVideo: null}
+        const video = await prisma.video.findUnique({
+          where:{
+            id: result.videoId
+          },
+          select:{
+            thumbnail: true
+          }
+        })
+
+        return {...playlist, firstVideo: video?.thumbnail}
+      })
+      
+    )
+    console.log(video);
+    
   
     return res.status(200).json({
-        finalResult
+        video
     });
   });
   
