@@ -3,7 +3,13 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
-
+declare global {
+    namespace Express {
+      interface Request {
+            userId?: string;
+      }
+    }
+  }   
 const app = express()
 dotenv.config()
 
@@ -12,7 +18,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static("public"))
 app.use(cors({
     origin:process.env.CORS_ORIGIN,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Allowed methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allow Authorization header
     credentials: true // If using cookies or session-based auth
 }))
