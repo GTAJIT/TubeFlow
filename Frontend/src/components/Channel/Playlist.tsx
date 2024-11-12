@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '../../services/api';
 import '../../styles/component_styles/playlist.css';
-import { faSlash } from '@fortawesome/free-solid-svg-icons';
 
 type Playlist = {
   id: number;

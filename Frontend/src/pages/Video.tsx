@@ -293,7 +293,7 @@ const Modal = ({ clientId, onclose, videoId }) => {
     // Loop through each checkbox and make API calls
     checkbox.forEach((check) => {
       api.patch(`/playlist/add/${videoId}/${check}`)
-        .then((res) => {
+        .then(() => {
           setAdd("Added to playlist");
         })
         .catch((error) => {

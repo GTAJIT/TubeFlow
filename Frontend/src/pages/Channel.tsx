@@ -96,7 +96,7 @@ const Channel = () => {
             {content.Home ? <ChannelHome/>: ""}
             {content.Videos ? <ChannelVideos id={channelDetails.id}/>: ""}
             {content.Playlists ? <Playlist id={channelDetails.id} clientId = {clientUserId}/>: ""}
-            {content.Tweets ? <Tweet/>: ""}
+            {content.Tweets ? <Tweet channelId={channelDetails.id}/>: ""}
         </div>
         </div>
       

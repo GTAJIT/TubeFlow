@@ -20,15 +20,61 @@ const createTweet = asyncHandler(async(req, res)=>{
 
 const getUserTweets = asyncHandler(async(req, res)=>{
     if(!req.userId) throw new ApiError(400, "Unauthorized Access")
-    const result = await prisma.tweet.findMany({
+    const tweet = await prisma.tweet.findMany({
         where:{
             userId: req.userId
         },
+    })
+    if(!tweet) throw new ApiError(400, "No tweets found")
+    const userDetails = await prisma.user.findUnique({
+        where:{
+            id: req.userId
+        },
         select:{
-            content: true
+            avatar: true,
+            username: true
         }
     })
-    if(!result) throw new ApiError(400, "No tweets found")
+    const result = await Promise.all(
+        tweet.map((item)=>({
+            ...item,
+            avatar: userDetails?.avatar,
+            username: userDetails?.username
+        }))
+    )
+    
+    res.status(200).json({
+        result
+    })
+})
+
+const getChannelTweets = asyncHandler(async(req, res)=>{
+    const channelId = req.params.channelId
+    // console.log(channelId)
+    if(!channelId) throw new ApiError(400, "Unauthorized Access")
+    const tweet = await prisma.tweet.findMany({
+        where:{
+            userId: channelId
+        },
+    })
+    if(!tweet) throw new ApiError(400, "No tweets found")
+    const userDetails = await prisma.user.findUnique({
+        where:{
+            id: channelId
+        },
+        select:{
+            avatar: true,
+            username: true
+        }
+    })
+    const result = await Promise.all(
+        tweet.map((item)=>({
+            ...item,
+            avatar: userDetails?.avatar,
+            username: userDetails?.username
+        }))
+    )
+    
     res.status(200).json({
         result
     })
@@ -84,5 +130,6 @@ export {
     createTweet,
     getUserTweets,
     updateTweet,
-    deleteTweet
+    deleteTweet,
+    getChannelTweets
 }
