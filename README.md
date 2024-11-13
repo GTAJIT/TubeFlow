@@ -1,4 +1,4 @@
-# TubeFlow - Full Stack YouTube-like Platform
+# TubeFlow - Full Stack Video-sharing and streaming Platform
 
 This project, **TubeFlow**, is a full-stack implementation of a YouTube-like platform, initially built by **Hitest Choudhury**. I am rebuilding and expanding it using **TypeScript** and **Prisma** (with a PostgreSQL database on Docker) to strengthen my skills in full-stack development, with enhancements on both the backend and frontend.
 
