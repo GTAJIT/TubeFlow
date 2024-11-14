@@ -83,7 +83,7 @@ npm run dev
 
 - **Frontend**: The frontend is developed using **React** and **TypeScript**, focusing on component-based design and reactivity.
 - **Backend**: Built with **Node.js** and **Express.js**, managing API routes and business logic.
-- **Prisma** ensures database queries are type-safe and maintainable.
+- **Prisma** ensures database queries are type-safe and maintainable with postgres.
 
 
 
