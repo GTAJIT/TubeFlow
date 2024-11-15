@@ -13,8 +13,9 @@ const createTweet = asyncHandler(async(req, res)=>{
         }
     })
     if(!result) throw new ApiError(404, "Error creating tweet")
+        console.log(result)
     res.status(200).json({
-        message: "Tweet Posted"
+        result
     })
 })
 

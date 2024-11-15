@@ -1,38 +1,54 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import TweetCard from "./TweetCard"; // Import TweetCard component
 import "../../styles/component_styles/tweet.css";
 import api from "../../services/api";
 
-function Tweet({channelId}: {channelId: string}) {
-  // Sample data for tweets
-  const [tweets, setTweets] = useState([
-    {
-      id: 0,
-      username: "",
-      avatar: "",
-      content: "",
-    }
-  ]);
-
+function Tweet({ channelId }: { channelId: string }) {
+  const [tweets, setTweets] = useState<
+    { id: number; username: string; avatar: string; content: string }[]
+  >([]);
   const [newTweet, setNewTweet] = useState("");
+  const [error, setError] = useState("");
 
-  useEffect(()=>{
-    api.get(`/tweet/all/${channelId}`)
-    .then((res)=>{
-      setTweets(res.data.result)
-    })
-  }, [channelId])
+  useEffect(() => {
+    const fetchTweets = async () => {
+      try {
+        const res = await api.get(`/tweet/all/${channelId}`);
+        setTweets(res.data.result);
+      } catch (err) {
+        setError("Failed to load tweets");
+      }
+    };
+    fetchTweets();
+  }, [channelId]);
 
-  const handleTweet = () => {
-    if (newTweet.trim()) {
-      const newTweetData = {
-        id: tweets.length + 1,
-        username: "new_user",
-        avatar: "https://via.placeholder.com/40",
-        content: newTweet,
-      };
-      setTweets([newTweetData, ...tweets]);
-      setNewTweet("");
+  const handleTweet = async () => {
+    if (!newTweet.trim()) {
+      setError("Tweet content cannot be empty.");
+      return;
+    }
+
+    try {
+      const result = await api.post("/tweet/create", {
+        tweet: newTweet,
+      });
+
+      if (result.status === 200) {
+        const newTweetData = {
+          id: result.data.id, // Assuming API returns the new tweet's ID
+          username: tweets[0].username, // Assuming API returns user details
+          avatar: tweets[0].avatar,
+          content: newTweet,
+        };
+
+        setTweets([newTweetData, ...tweets]); // Prepend new tweet
+        setNewTweet(""); // Clear input field
+        setError(""); // Clear any previous error
+      } else {
+        setError("Error posting tweet");
+      }
+    } catch (err) {
+      setError("Failed to post tweet");
     }
   };
 
@@ -59,14 +75,19 @@ function Tweet({channelId}: {channelId: string}) {
         </button>
       </div>
 
-      {tweets.map((tweet) => (
-        <TweetCard
-          key={tweet.id}
-          avatar={tweet.avatar}
-          username={tweet.username}
-          content={tweet.content}
-        />
-      ))}
+      {error && <p className="error-message">{error}</p>} {/* Display error */}
+
+      {/* Sort tweets by ID (assumed descending) and render */}
+      {tweets
+        .sort((a, b) => b.id - a.id)
+        .map((tweet) => (
+          <TweetCard
+            key={tweet.id}
+            avatar={tweet.avatar}
+            username={tweet.username}
+            content={tweet.content}
+          />
+        ))}
     </div>
   );
 }
