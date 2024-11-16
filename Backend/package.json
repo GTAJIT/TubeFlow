@@ -4,7 +4,7 @@
   "description": "This is a demo backend for youtube. I'm just learning this.",
   "main": "src/index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "npx tsc && prisma generate",
     "dev": "nodemon src/index.ts"
   },
   "author": "",
