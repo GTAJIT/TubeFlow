@@ -33,6 +33,7 @@ model User {
   comments      Comment[]
   likes         Like[]
   playlist      Playlist[]
+  viewer        Views[]
   username      String        @unique
   email         String        @unique
   fullName      String
@@ -57,10 +58,20 @@ model Video {
   title       String
   description String
   duration    Int
-  views       Int
+  views       Views[]
   isPublished Boolean
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Views {
+  id Int @id @default(autoincrement())
+  Video Video @relation(fields: [videoId], references: [id])
+  videoId Int 
+  viewerId User @relation(fields: [userId], references: [id])
+  userId  String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model WatchHistory{

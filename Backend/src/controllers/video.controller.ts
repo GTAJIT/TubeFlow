@@ -28,7 +28,6 @@ const uploadVideo = asyncHandler(async(req, res)=>{
                     userId: userId,
                     title: title.toLowerCase(),
                     description: description.toLowerCase(),
-                    views: 0,
                     isPublished: false,
                     duration: duration        
             }
@@ -258,6 +257,34 @@ const getVideosOfChannel = asyncHandler(async(req, res)=>{
     }
     
 })
+
+const increaseViewsCount = asyncHandler(async(req, res)=>{
+    const {videoId} = req.params
+    const userId = req.userId;
+    if(!userId) throw new ApiError(400, "Unauthorized Access")
+    const existingViews = await prisma.views.findFirst({
+        where:{
+            userId: userId
+        }
+    })
+
+    if(existingViews) {
+        res.json(existingViews) 
+        return; 
+    }
+    const viewIncrease = await prisma.views.create({
+        data:{
+            videoId: parseInt(videoId),
+            userId: userId
+        }
+    })
+
+    res.json({
+        viewIncrease
+    })
+})
+
+
 export {
     uploadVideo,
     togglePublishStatus,
@@ -266,5 +293,6 @@ export {
     deleteVideo,
     getAllVideos,
     watchHistory,
-    getVideosOfChannel
+    getVideosOfChannel,
+    increaseViewsCount
 }
