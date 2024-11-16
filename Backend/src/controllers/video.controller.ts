@@ -5,6 +5,7 @@ import { ApiError } from "../utils/ApiError";
 import { asyncHandler } from "../utils/AsyncHandler";
 import { deleteOldImage, deleteOldVideo, uploadOnCloudinary } from "../utils/cloudinary";
 import {getVideoDurationInSeconds} from 'get-video-duration'
+import client from "../utils/redisClient";
 const uploadVideo = asyncHandler(async(req, res)=>{
     try {
         const userId = req.userId
@@ -262,26 +263,29 @@ const increaseViewsCount = asyncHandler(async(req, res)=>{
     const {videoId} = req.params
     const userId = req.userId;
     if(!userId) throw new ApiError(400, "Unauthorized Access")
-    const existingViews = await prisma.views.findFirst({
-        where:{
-            userId: userId
-        }
-    })
-
-    if(existingViews) {
-        res.json(existingViews) 
-        return; 
+    const redisKey = `video:${videoId}:viewers`;
+    const isNewView = await client.sAdd(redisKey, userId);
+    if(isNewView){
+        await client.incr(`video:${videoId}:views`)
+        const result = await prisma.views.create({
+            data:{
+                videoId: parseInt(videoId),
+                userId: userId
+            }
+        })
+        if(!result) throw new ApiError(500, "Views cannot be able to update")
+        const views = await client.get(`video:${videoId}:views`)
+        res.status(200).json({
+            views
+        })
+    } else{
+        const views = await client.get(`video:${videoId}:views`)
+        console.log(views)
+        res.status(301).json({
+            views
+        })
+        return;
     }
-    const viewIncrease = await prisma.views.create({
-        data:{
-            videoId: parseInt(videoId),
-            userId: userId
-        }
-    })
-
-    res.json({
-        viewIncrease
-    })
 })
 
 
@@ -294,5 +298,5 @@ export {
     getAllVideos,
     watchHistory,
     getVideosOfChannel,
-    increaseViewsCount
+    increaseViewsCount,
 }
