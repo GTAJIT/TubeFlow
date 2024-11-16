@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import '../styles/channel.css';
 import api from '../services/api';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ChannelHome from '../components/Channel/ChannelHome';
 import ChannelVideos from '../components/Channel/ChannelVideos';
 import Playlist from '../components/Channel/Playlist';
@@ -9,7 +9,6 @@ import Tweet from '../components/Channel/Tweet';
 
 const Channel = () => {
     const {username} = useParams()
-    const navigate = useNavigate()
     const [channelDetails, setChannelDetails] = useState({
         id: "",
         subscribers: "",

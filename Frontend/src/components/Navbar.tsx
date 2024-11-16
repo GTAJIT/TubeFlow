@@ -7,10 +7,10 @@ import userProfile from '../../public/assets/user_profile.jpg';
 import '../styles/component_styles/navbar.css';
 import { useEffect, useState } from 'react';
 import api from '../services/api';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { hamburger } from '../context/hamburger.atoms';
-import { userIdContext } from '../context/auth.atoms';
+import {  useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
+import { hamburger } from '../context/hamburger.atoms';
+
 
 type UserDetails = {
   id: "";

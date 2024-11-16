@@ -1,4 +1,3 @@
-import React from 'react';
 import '../../styles/component_styles/tweet.css'
 
 //@ts-ignore
