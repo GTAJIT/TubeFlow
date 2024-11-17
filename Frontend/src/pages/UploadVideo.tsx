@@ -60,11 +60,13 @@ function UploadVideo() {
             } else {
                 setError("Error uploading");
             }
-            if(publish == false){
-                return;
+            if (publish && response.data?.message?.id) {
+                const togglePublish = await api.post(`/video/toggle-publish-status/${response.data.message.id}`);
+                console.log("Publish toggled:", togglePublish.data);
+            } else {
+                console.log("Video not published.");
             }
-            const togglePublish = await api.post(`/video/toggle-publish-status/${response.data.message.id}`)
-            console.log(togglePublish)
+            
         } catch (error) {
             console.error("Upload error:", error);
             // Set a more descriptive error message

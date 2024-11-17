@@ -1,10 +1,9 @@
-import { tuple } from "zod";
 import prisma from "../db/db";
 import { deleteFilePath } from "../middlewares/multer.middleware";
 import { ApiError } from "../utils/ApiError";
 import { asyncHandler } from "../utils/AsyncHandler";
 import { deleteOldImage, deleteOldVideo, uploadOnCloudinary } from "../utils/cloudinary";
-import {getVideoDurationInSeconds} from 'get-video-duration'
+// import getVideoDuration from "../utils/getVideoDuration";
 import client from "../utils/redisClient";
 const uploadVideo = asyncHandler(async(req, res)=>{
     try {
@@ -19,8 +18,8 @@ const uploadVideo = asyncHandler(async(req, res)=>{
         if(!videoUpload) throw new ApiError(404, "Video cannot be uploaded")
         const thumbnailUpload = await uploadOnCloudinary(thumbnail[0].path)
         if(!thumbnailUpload) throw new ApiError(404, "Thumbnail cannot be uploaded");
-        const duration = await getVideoDurationInSeconds(videoUpload)
-        if(!duration) throw new ApiError(404, "Duration error")
+        // const duration = await getVideoDuration(videoUpload)
+        // if(!duration) throw new ApiError(404, "Duration error")
         
         const result = await prisma.video.create({
             data:{
@@ -30,7 +29,7 @@ const uploadVideo = asyncHandler(async(req, res)=>{
                     title: title.toLowerCase(),
                     description: description.toLowerCase(),
                     isPublished: false,
-                    duration: duration        
+                    duration: 10        
             }
         })
         if(!result) throw new ApiError(404, "Upload Unsuccessful");
