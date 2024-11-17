@@ -8,4 +8,5 @@ router.route('/create').post(auth_middleware_1.verifyJWT, tweet_controller_1.cre
 router.route('/update/:id').put(auth_middleware_1.verifyJWT, tweet_controller_1.updateTweet);
 router.route('/delete/:id').delete(auth_middleware_1.verifyJWT, tweet_controller_1.deleteTweet);
 router.route('/all').get(auth_middleware_1.verifyJWT, tweet_controller_1.getUserTweets);
+router.route('/all/:channelId').get(auth_middleware_1.verifyJWT, tweet_controller_1.getChannelTweets);
 exports.default = router;

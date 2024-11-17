@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTweet = exports.updateTweet = exports.getUserTweets = exports.createTweet = void 0;
+exports.getChannelTweets = exports.deleteTweet = exports.updateTweet = exports.getUserTweets = exports.createTweet = void 0;
 const db_1 = __importDefault(require("../db/db"));
 const ApiError_1 = require("../utils/ApiError");
 const AsyncHandler_1 = require("../utils/AsyncHandler");
@@ -30,29 +30,64 @@ const createTweet = (0, AsyncHandler_1.asyncHandler)((req, res) => __awaiter(voi
     });
     if (!result)
         throw new ApiError_1.ApiError(404, "Error creating tweet");
+    console.log(result);
     res.status(200).json({
-        message: "Tweet Posted"
+        result
     });
 }));
 exports.createTweet = createTweet;
 const getUserTweets = (0, AsyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.userId)
         throw new ApiError_1.ApiError(400, "Unauthorized Access");
-    const result = yield db_1.default.tweet.findMany({
+    const tweet = yield db_1.default.tweet.findMany({
         where: {
             userId: req.userId
         },
+    });
+    if (!tweet)
+        throw new ApiError_1.ApiError(400, "No tweets found");
+    const userDetails = yield db_1.default.user.findUnique({
+        where: {
+            id: req.userId
+        },
         select: {
-            content: true
+            avatar: true,
+            username: true
         }
     });
-    if (!result)
-        throw new ApiError_1.ApiError(400, "No tweets found");
+    const result = yield Promise.all(tweet.map((item) => (Object.assign(Object.assign({}, item), { avatar: userDetails === null || userDetails === void 0 ? void 0 : userDetails.avatar, username: userDetails === null || userDetails === void 0 ? void 0 : userDetails.username }))));
     res.status(200).json({
         result
     });
 }));
 exports.getUserTweets = getUserTweets;
+const getChannelTweets = (0, AsyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const channelId = req.params.channelId;
+    // console.log(channelId)
+    if (!channelId)
+        throw new ApiError_1.ApiError(400, "Unauthorized Access");
+    const tweet = yield db_1.default.tweet.findMany({
+        where: {
+            userId: channelId
+        },
+    });
+    if (!tweet)
+        throw new ApiError_1.ApiError(400, "No tweets found");
+    const userDetails = yield db_1.default.user.findUnique({
+        where: {
+            id: channelId
+        },
+        select: {
+            avatar: true,
+            username: true
+        }
+    });
+    const result = yield Promise.all(tweet.map((item) => (Object.assign(Object.assign({}, item), { avatar: userDetails === null || userDetails === void 0 ? void 0 : userDetails.avatar, username: userDetails === null || userDetails === void 0 ? void 0 : userDetails.username }))));
+    res.status(200).json({
+        result
+    });
+}));
+exports.getChannelTweets = getChannelTweets;
 const updateTweet = (0, AsyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { tweet } = req.body;
     const { id } = req.params;

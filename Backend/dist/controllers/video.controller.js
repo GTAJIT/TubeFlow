@@ -12,13 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getVideosOfChannel = exports.watchHistory = exports.getAllVideos = exports.deleteVideo = exports.updateVideo = exports.getVideoById = exports.togglePublishStatus = exports.uploadVideo = void 0;
+exports.increaseViewsCount = exports.getVideosOfChannel = exports.watchHistory = exports.getAllVideos = exports.deleteVideo = exports.updateVideo = exports.getVideoById = exports.togglePublishStatus = exports.uploadVideo = void 0;
 const db_1 = __importDefault(require("../db/db"));
 const multer_middleware_1 = require("../middlewares/multer.middleware");
 const ApiError_1 = require("../utils/ApiError");
 const AsyncHandler_1 = require("../utils/AsyncHandler");
 const cloudinary_1 = require("../utils/cloudinary");
 const get_video_duration_1 = require("get-video-duration");
+const redisClient_1 = __importDefault(require("../utils/redisClient"));
 const uploadVideo = (0, AsyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userId = req.userId;
@@ -44,7 +45,6 @@ const uploadVideo = (0, AsyncHandler_1.asyncHandler)((req, res) => __awaiter(voi
                 userId: userId,
                 title: title.toLowerCase(),
                 description: description.toLowerCase(),
-                views: 0,
                 isPublished: false,
                 duration: duration
             }
@@ -275,3 +275,35 @@ const getVideosOfChannel = (0, AsyncHandler_1.asyncHandler)((req, res) => __awai
     }
 }));
 exports.getVideosOfChannel = getVideosOfChannel;
+const increaseViewsCount = (0, AsyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { videoId } = req.params;
+    const userId = req.userId;
+    if (!userId)
+        throw new ApiError_1.ApiError(400, "Unauthorized Access");
+    const redisKey = `video:${videoId}:viewers`;
+    const isNewView = yield redisClient_1.default.sAdd(redisKey, userId);
+    if (isNewView) {
+        yield redisClient_1.default.incr(`video:${videoId}:views`);
+        const result = yield db_1.default.views.create({
+            data: {
+                videoId: parseInt(videoId),
+                userId: userId
+            }
+        });
+        if (!result)
+            throw new ApiError_1.ApiError(500, "Views cannot be able to update");
+        const views = yield redisClient_1.default.get(`video:${videoId}:views`);
+        res.status(200).json({
+            views
+        });
+    }
+    else {
+        const views = yield redisClient_1.default.get(`video:${videoId}:views`);
+        console.log(views);
+        res.status(301).json({
+            views
+        });
+        return;
+    }
+}));
+exports.increaseViewsCount = increaseViewsCount;

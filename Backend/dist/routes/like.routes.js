@@ -10,4 +10,5 @@ router.route("/toggle/c/:commentId").post(like_controller_1.toggleCommentLike);
 router.route("/toggle/t/:tweetId").post(like_controller_1.toggleTweetLike);
 router.route("/videos").get(like_controller_1.getLikedVideos);
 router.route('/video/:videoId').get(like_controller_1.getLikeById);
+router.route('/tweet/:tweetId').get(like_controller_1.getTweetLikeById);
 exports.default = router;

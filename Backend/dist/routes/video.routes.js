@@ -22,4 +22,5 @@ router.route('/get-all-videos').get(auth_middleware_1.verifyJWT, video_controlle
 router.route('/update-video/:videoId').put(auth_middleware_1.verifyJWT, multer_middleware_1.upload.single('thumbnail'), video_controller_1.updateVideo);
 router.route('/watch/:videoId').post(auth_middleware_1.verifyJWT, video_controller_1.watchHistory);
 router.route('/:id').get(auth_middleware_1.verifyJWT, video_controller_1.getVideosOfChannel);
+router.route('/views/:videoId').post(auth_middleware_1.verifyJWT, video_controller_1.increaseViewsCount);
 exports.default = router;

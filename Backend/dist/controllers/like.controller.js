@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLikeById = exports.getLikedVideos = exports.toggleVideoLike = exports.toggleTweetLike = exports.toggleCommentLike = void 0;
+exports.getTweetLikeById = exports.getLikeById = exports.getLikedVideos = exports.toggleVideoLike = exports.toggleTweetLike = exports.toggleCommentLike = void 0;
 const db_1 = __importDefault(require("../db/db"));
 const ApiError_1 = require("../utils/ApiError");
 const AsyncHandler_1 = require("../utils/AsyncHandler");
@@ -157,3 +157,15 @@ const getLikeById = (0, AsyncHandler_1.asyncHandler)((req, res) => __awaiter(voi
     });
 }));
 exports.getLikeById = getLikeById;
+const getTweetLikeById = (0, AsyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const tweetId = parseInt(req.params.tweetId);
+    const likeCount = yield db_1.default.like.count({
+        where: {
+            tweetId: tweetId
+        }
+    });
+    res.json({
+        likeCount
+    });
+}));
+exports.getTweetLikeById = getTweetLikeById;

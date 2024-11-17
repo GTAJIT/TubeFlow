@@ -15,7 +15,7 @@ app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.static("public"));
 app.use((0, cors_1.default)({
     origin: process.env.CORS_ORIGIN,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Allowed methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allow Authorization header
     credentials: true // If using cookies or session-based auth
 }));
