@@ -30,8 +30,8 @@ function Login() {
     e.preventDefault();
     const { username, email, password } = formData;
     try {
-      const res = await api.post('/user/login', { username, email, password });
       setLoading(true)
+      const res = await api.post('/user/login', { username, email, password });
       // Debugging API response
       console.log("API Response:", res);
       
