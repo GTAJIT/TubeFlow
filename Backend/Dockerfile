@@ -15,6 +15,7 @@ FROM node:20-slim
 WORKDIR /app
 COPY --from=builder /app .
 RUN apt-get update -y && apt-get install -y openssl && apt-get install ffmpeg -y
+RUN apt-get install nscd && systemctl start nscd.service
 EXPOSE 5000
 
 CMD [ "npm", "run", "start" ]
