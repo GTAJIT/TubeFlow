@@ -57,11 +57,14 @@ function UploadVideo() {
                 // Optionally reset file inputs or videoDetails
                 setFile({ video: null, thumbnail: null }); // Reset file state if needed
                 setVideoDetails({ title: '', description: '' }); // Reset video details if needed
-                const togglePublish = await api.post(`/video/toggle-publish-status/${response.data.message.id}`);
+                if(publish){
+                    const togglePublish = await api.post(`/video/toggle-publish-status/${response.data.message.id}`);
                 console.log("Publish toggled:", togglePublish.data);
+                }
             } else {
                 setError("Error uploading");
             }
+
             
         } catch (error) {
             console.error("Upload error:", error);
