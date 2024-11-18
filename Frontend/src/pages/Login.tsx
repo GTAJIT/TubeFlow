@@ -24,12 +24,14 @@ function Login() {
     });
   };
 
+  const [loading, setLoading] = useState(false)
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { username, email, password } = formData;
     try {
       const res = await api.post('/user/login', { username, email, password });
-
+      setLoading(true)
       // Debugging API response
       console.log("API Response:", res);
       
@@ -49,10 +51,12 @@ function Login() {
       console.log("Auth state set to true. Navigating to /dashboard.");
       // Separate the navigation call for clarity
       navigate("/dashboard");
-
+      
     } catch (error) {
       console.error("Login Error:", error);
       setError("Login failed. Please try again.");
+    } finally{
+      setLoading(false)
     }
   };
 
@@ -81,7 +85,7 @@ function Login() {
         value={formData.password}
         onChange={handleChange}
         />
-      <button type="submit">Login</button>
+      <button type="submit">{loading? "Logging In....": "Login"}</button>
 
       {error && <p>{error}</p>}
     </form>
