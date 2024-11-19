@@ -8,7 +8,7 @@ import '../styles/component_styles/navbar.css';
 import { useEffect, useState } from 'react';
 import api from '../services/api';
 import {  useSetRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { hamburger } from '../context/hamburger.atoms';
 
 
@@ -58,7 +58,10 @@ const setHamburger = useSetRecoilState(hamburger)
         <img src={menuIcon} alt="Menu Icon" className="navbar__icon" onClick={()=>{
           setHamburger((item)=>!item)
         }}/>
+        <Link to="/dashboard">
         <img src={logo} alt="Logo" className="navbar__logo" />
+        </Link>
+
       </div>
 
       <div className="navbar__center">
