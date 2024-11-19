@@ -1,6 +1,9 @@
-import app from './app'
-const port  = process.env.PORT || 8000
+import app from './app';
+import { VercelRequest, VercelResponse } from '@vercel/node';
+import { createServer } from 'http';
 
-app.listen(port, ()=>{
-    console.log(`SERVER RUNNING AT ${port}`)
-}) 
+const server = createServer((req, res) => app(req as any, res as any));
+
+export default (req: VercelRequest, res: VercelResponse) => {
+  server.emit('request', req, res);
+};
