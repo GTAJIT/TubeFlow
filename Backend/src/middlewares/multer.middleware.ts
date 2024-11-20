@@ -2,18 +2,9 @@
 import multer from 'multer';
 import path from 'path';  // This is key for file extension handling
 import fs from 'fs'
-const ensureDirectoryExists = (dirPath: string): void => {
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
-    console.log(`Directory created: ${dirPath}`);
-  }
-};
-
-const tempDir: string = process.env.TEMP_UPLOAD_DIR || path.resolve(__dirname, '../public/temp');
-ensureDirectoryExists(tempDir);
-
-const storage = multer.diskStorage({ destination: function (req, file, cb) {
-    cb(null, tempDir);
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/temp');
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
