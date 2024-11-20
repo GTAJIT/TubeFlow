@@ -5,45 +5,85 @@ import { asyncHandler } from "../utils/AsyncHandler";
 import { deleteOldImage, deleteOldVideo, uploadOnCloudinary } from "../utils/cloudinary";
 //import {getVideoDurationInSeconds} from "get-video-duration";
 import client from "../utils/redisClient";
-const uploadVideo = asyncHandler(async(req, res)=>{
-    try {
-        const userId = req.userId
-        if(!userId){
-            throw new ApiError(401, "Unauthorized Access")
-        }
-        const { title, description } = req.body;
-        console.log(req.files)
-        const {video, thumbnail} = req.files as {[fieldName: string]: Express.Multer.File[]}
-        const videoUpload = await uploadOnCloudinary(video[0].path)  
-        if(!videoUpload) throw new ApiError(404, "Video cannot be uploaded")
-        const thumbnailUpload = await uploadOnCloudinary(thumbnail[0].path)
-        if(!thumbnailUpload) throw new ApiError(404, "Thumbnail cannot be uploaded");
- //       const duration = await getVideoDurationInSeconds(videoUpload)
-  //      if(!duration) throw new ApiError(404, "Duration error")
-        
-        const result = await prisma.video.create({
-            data:{
-                    videoFile: videoUpload,
-                    thumbnail: thumbnailUpload,
-                    userId: userId,
-                    title: title.toLowerCase(),
-                    description: description.toLowerCase(),
-                    isPublished: false,
-                    duration: 10,
-            }
-        })
-        if(!result) throw new ApiError(404, "Upload Unsuccessful");
-        deleteFilePath(video[0].path)
-        deleteFilePath(thumbnail[0].path)
-        res.json({
-            message: result
-        })
-    } catch (error) {
-        console.log(error)
-        //@ts-ignore
-        throw new ApiError(404, error)
+import fs from 'fs'
+const uploadVideo = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.userId;
+    if (!userId) {
+      throw new ApiError(401, "Unauthorized Access");
     }
-})
+
+    const { title, description } = req.body;
+    console.log("Request Body:", req.body);
+
+    // Validate uploaded files
+    console.log("Uploaded Files:", req.files);
+    //@ts-ignore
+    const { video, thumbnail } = req.files || {};
+    if (!video || !video[0]?.path || !thumbnail || !thumbnail[0]?.path) {
+      throw new ApiError(400, "Video or thumbnail file is missing");
+    }
+
+    const videoPath = video[0].path;
+    const thumbnailPath = thumbnail[0].path;
+
+    // Ensure files exist
+    if (!fs.existsSync(videoPath)) {
+      throw new ApiError(404, `Video file not found at path: ${videoPath}`);
+    }
+    if (!fs.existsSync(thumbnailPath)) {
+      throw new ApiError(404, `Thumbnail file not found at path: ${thumbnailPath}`);
+    }
+
+    console.log("Video path and thumbnail path exist, proceeding to upload...");
+
+    // Upload video to Cloudinary
+    const videoUpload = await uploadOnCloudinary(videoPath);
+    if (!videoUpload) {
+      throw new ApiError(500, "Video cannot be uploaded");
+    }
+
+    // Upload thumbnail to Cloudinary
+    const thumbnailUpload = await uploadOnCloudinary(thumbnailPath);
+    if (!thumbnailUpload) {
+      throw new ApiError(500, "Thumbnail cannot be uploaded");
+    }
+
+    console.log("Cloudinary Uploads Successful:", { videoUpload, thumbnailUpload });
+
+    // Create video record in database
+    const result = await prisma.video.create({
+      data: {
+        videoFile: videoUpload,
+        thumbnail: thumbnailUpload,
+        userId: userId,
+        title: title.toLowerCase(),
+        description: description.toLowerCase(),
+        isPublished: false,
+        duration: 10, // Replace this with actual duration logic if required
+      },
+    });
+
+    if (!result) {
+      throw new ApiError(500, "Video record creation failed");
+    }
+
+    console.log("Video record created in database:", result);
+
+    // Delete local files after successful upload
+    deleteFilePath(videoPath);
+    deleteFilePath(thumbnailPath);
+
+    res.status(200).json({
+      message: "Video uploaded successfully",
+      video: result,
+    });
+  } catch (error) {
+    console.error("Error in uploadVideo:", error);
+    //@ts-ignore 
+    throw new ApiError(500, error.message || "An unexpected error occurred");
+  }
+});
 
 const togglePublishStatus = asyncHandler(async(req , res)=>{
     const userId = req.userId

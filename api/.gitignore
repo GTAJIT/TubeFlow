@@ -1,6 +1,5 @@
 # prod
 dist/
-
 # dev
 .yarn/
 !.yarn/releases
@@ -19,6 +18,7 @@ node_modules/
 .env
 .env.production
 .dev.vars
+wrangler.toml
 
 # logs
 logs/
