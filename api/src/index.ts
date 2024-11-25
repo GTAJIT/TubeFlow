@@ -11,11 +11,7 @@ app.use(async(c:Context, next)=>{
         api_key: c.env.CLOUDINARY_API_KEY,
         api_secret: c.env.CLOUDINARY_API_SECRET
     });
-    console.log('Cloudinary Config:', {
-      cloud_name: c.env.CLOUDINARY_CLOUD_NAME,
-      api_key: c.env.CLOUDINARY_API_KEY ? 'Loaded' : 'Missing',
-      api_secret: c.env.CLOUDINARY_API_SECRET ? 'Loaded' : 'Missing',
-    });
+    
     await next();
 })
 app.get('/', (c) => {
