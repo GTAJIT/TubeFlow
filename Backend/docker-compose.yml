@@ -1,0 +1,44 @@
+
+networks:
+  app_network:
+    driver: bridge
+services:
+  app:
+    image: node:20-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tubeflow-backend
+    working_dir: /app
+    environment:
+      - DATABASE_URL=postgresql://mohak:mysecretpassword@db:5432/youtube
+      - REDIS_URL=rediss://red-csufmhqlqhvc73cmcse0:FOrjYcf9kig4LuuaW5kHjmz4SwRU8bBR@singapore-redis.render.com:6379
+      - JWT_SECRET=mysecretpassword
+      - JWT_EXPIRY=1d
+      - REFRESH_TOKEN_SECRET=myrefreshtoken
+      - REFRESH_EXPIRY=30d
+      - CLOUDINARY_API_SECRET=6ImoSeUKdITPMTwfJl3T6OK9g4w
+      - CLOUDINARY_API_KEY=461632713949731
+      - CLOUDINARY_CLOUD_NAME=dpusyufi0
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    networks:
+      - app_network
+  db:
+    image: postgres
+    container_name: tubeflow-db
+    volumes:
+      - postgres-data:/var/lib/postgres/data
+    environment:
+      - POSTGRES_USER=mohak
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_DB=youtube
+    ports:
+      - "5432:5432"
+    networks:
+      - app_network
+  
+volumes:
+  postgres-data:  
