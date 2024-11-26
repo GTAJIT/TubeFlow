@@ -21,9 +21,6 @@ Thank you for your interest in contributing to TubeFlow! We welcome contribution
     ```
     git branch feature/your-feature-name
     git checkout -b feature/your-feature-name
-
-6. Using Docker:
-        
     ```
 
 ## How to Contribute
@@ -53,7 +50,6 @@ To contribute code:
     git push origin feature/your-feature-name
     ```
 5. Open a pull request with a clear title and description, linking any related issues.
-
 
 
 ## Pull Request Guidelines
