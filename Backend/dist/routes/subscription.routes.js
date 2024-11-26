@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const subscription_controller_1 = require("../controllers/subscription.controller");
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+const router = (0, express_1.Router)();
+router.route('/get-subscribers/:channelId').get(auth_middleware_1.verifyJWT, subscription_controller_1.getUserChannelSubscribers);
+router.route('/toggle-subscription/:channelId').post(auth_middleware_1.verifyJWT, subscription_controller_1.toggleSubscription);
+router.route('/get-subscribed-channels/:subscriberId').get(auth_middleware_1.verifyJWT, subscription_controller_1.getSubscribedChannels);
+exports.default = router;

@@ -1,0 +1,15 @@
+import { Request, Response } from "express";
+declare const registerHandler: (req: Request, res: Response, next: import("express").NextFunction) => void;
+declare const loginHandler: (req: Request, res: Response, next: import("express").NextFunction) => void;
+declare const logoutHandler: (req: Request, res: Response, next: import("express").NextFunction) => void;
+declare const refreshAccessToken: (req: Request, res: Response, next: import("express").NextFunction) => void;
+declare const updatePassword: (req: Request, res: Response, next: import("express").NextFunction) => void;
+declare const getCurrentUser: (req: Request, res: Response, next: import("express").NextFunction) => void;
+declare const getUserById: (req: Request, res: Response, next: import("express").NextFunction) => void;
+declare const updateUsername: (req: Request, res: Response, next: import("express").NextFunction) => void;
+declare const updateUserAvatar: (req: Request, res: Response, next: import("express").NextFunction) => void;
+declare const updateUserCoverImage: (req: Request, res: Response, next: import("express").NextFunction) => void;
+declare const getUserChannelProfile: (req: Request, res: Response, next: import("express").NextFunction) => void;
+declare const getWatchHistory: (req: Request, res: Response, next: import("express").NextFunction) => void;
+declare const check: (req: Request, res: Response, next: import("express").NextFunction) => void;
+export { registerHandler, loginHandler, logoutHandler, refreshAccessToken, updatePassword, getCurrentUser, updateUsername, updateUserAvatar, updateUserCoverImage, getUserChannelProfile, getWatchHistory, check, getUserById, };

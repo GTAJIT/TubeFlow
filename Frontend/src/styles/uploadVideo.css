@@ -1,0 +1,145 @@
+/* General page styles */
+.container {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: radial-gradient(circle at center, #121212, #0b0b0b);
+    color: #e0e0e0;
+    height: 100vh;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Form container styling */
+  .upload-form {
+    background-color: #1a1a1a;
+    padding: 1.8rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(255, 255, 255, 0.1);
+    width: 100%;
+    max-width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border: 1px solid #333;
+  }
+  
+  /* Label styling */
+  .upload-form label {
+    font-size: 0.85rem;
+    color: #bbbbbb;
+  }
+  
+  /* Input field styling */
+  .upload-form input[type="text"],
+  .upload-form input[type="file"] {
+    padding: 0.7rem;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+    outline: none;
+    transition: background-color 0.3s, border 0.3s;
+  }
+  
+  .upload-form input::placeholder {
+    color: #888;
+    opacity: 0.8;
+  }
+  
+  .upload-form input:focus {
+    background-color: #2c2c2c;
+    border: 1px solid #ff7a18;
+  }
+  
+  /* Button styling */
+  .upload-form button {
+    padding: 0.7rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #ffffff;
+    background: linear-gradient(135deg, #ff7a18, #e52e71, #e5217e);
+    background-size: 200% 200%;
+    transition: background-position 0.4s ease, transform 0.2s ease;
+    box-shadow: 0px 4px 10px rgba(229, 46, 113, 0.4);
+  }
+  
+  .upload-form button:hover {
+    background-position: 100% 0;
+    transform: scale(1.03);
+  }
+  
+  /* Toggle slider container */
+  .toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  
+  .toggle-label {
+    color: #bbbbbb;
+    font-size: 0.85rem;
+  }
+  
+  /* Hide default checkbox */
+  .toggle-input {
+    display: none;
+  }
+  
+  /* Slider styling */
+  .toggle-slider {
+    position: relative;
+    width: 45px;
+    height: 20px;
+    background-color: #444;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  /* Slider before toggle */
+  .toggle-slider::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 1px;
+    bottom: 1px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    transition: transform 0.3s;
+  }
+  
+  /* Checkbox checked state */
+  .toggle-input:checked + .toggle-slider {
+    background-color: #ff7a18;
+  }
+  
+  .toggle-input:checked + .toggle-slider::before {
+    transform: translateX(24px);
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 480px) {
+    .upload-form {
+      padding: 1.2rem 1rem;
+      max-width: 85%;
+    }
+  
+    .upload-form input,
+    .upload-form button {
+      font-size: 0.85rem;
+    }
+  }
+  
+  @media (min-width: 481px) and (max-width: 768px) {
+    .upload-form {
+      max-width: 75%; /* Slightly larger width for medium screens */
+    }
+  }
+  

@@ -1,0 +1,55 @@
+/* Container styling for videos */
+.videos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+    background-color: #f9f9f9;
+  }
+  
+  /* Individual video card styling */
+  .video-card {
+    width: 220px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+  }
+  
+  .video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Thumbnail image styling */
+  .video-thumbnail {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  /* Title text styling */
+  /* Title text styling */
+.video-title {
+    font-size: 18px;           /* Increased font size */
+    font-weight: 700;          /* Slightly bolder weight */
+    color: #333;
+    margin: 12px 0 6px;
+    padding: 0 10px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* Views count styling */
+  .video-views {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+  }
+  

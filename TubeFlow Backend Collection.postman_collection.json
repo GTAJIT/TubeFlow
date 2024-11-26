@@ -1,0 +1,1372 @@
+{
+	"info": {
+		"_postman_id": "16cb803a-9ab0-45a0-bb03-3a870a711771",
+		"name": "TubeFlow Backend Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32578280"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/ethic/Downloads/Roadmap.png"
+								},
+								{
+									"key": "username",
+									"value": "Chotu",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "chotu@gmail.om",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123123123",
+									"type": "text"
+								},
+								{
+									"key": "coverImage",
+									"type": "file",
+									"src": "/C:/Users/ethic/Downloads/WhatsApp Image 2024-09-30 at 00.23.06_a3454659.jpg"
+								},
+								{
+									"key": "fullName",
+									"value": "Chotu Das",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/user/register",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"koushik\",\r\n    \"email\": \"koushik23@gmail.om\",\r\n    \"password\":\"123123123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/user/login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3OTliMjY5MS0zMzAzLTQ1ZWYtODc2MC0wYTFjY2QxNzg0ZjMiLCJpYXQiOjE3Mjg0NjcxNDksImV4cCI6MTcyODU1MzU0OX0.5IwYZMT4ubkOedfFf9w7C6wV7iDyY2Foi2FK5Wl7doc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/user/logout",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update refresh token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5YTVkMzQ2ZC00ODBjLTQ0NzItODIxMy00ZjIzNjYwZWMyYzMiLCJpYXQiOjE3Mjg0NjY0MDgsImV4cCI6MTczMTA1ODQwOH0.NYHYggFx_ewbTVQIek2gksuBYIt4rBCLu7yiTCPlanQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3OTliMjY5MS0zMzAzLTQ1ZWYtODc2MC0wYTFjY2QxNzg0ZjMiLCJpYXQiOjE3Mjg0NjcxNDksImV4cCI6MTczMTA1OTE0OX0.XPffiHr8XOEQesLrs9SDB0d0QtY9TFoO-YQ1cYAtdJU\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/user/refresh-token",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3OTliMjY5MS0zMzAzLTQ1ZWYtODc2MC0wYTFjY2QxNzg0ZjMiLCJpYXQiOjE3Mjg1OTI4OTksImV4cCI6MTcyODY3OTI5OX0.pCRorrFFxDCvCbz2JCrhXBxgpYVhBZ4gCf0lUHEd1qU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\":\"123123\",\r\n    \"newPassword\":\"newpass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/user/update-password",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"update-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get current user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1N2EwNWNlNi1hNGQ5LTQxNWEtYjk1NS01MmU2YTcwNWM3YzciLCJpYXQiOjE3MjkzMjI5NjgsImV4cCI6MTcyOTQwOTM2OH0.6rktH_ZZJGmns1y21SnykvByq2iqimtowtayQp2oKJY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/user/get-current-user",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"get-current-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update username",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3OTliMjY5MS0zMzAzLTQ1ZWYtODc2MC0wYTFjY2QxNzg0ZjMiLCJpYXQiOjE3Mjg1OTI4OTksImV4cCI6MTcyODY3OTI5OX0.pCRorrFFxDCvCbz2JCrhXBxgpYVhBZ4gCf0lUHEd1qU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"Bishal\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/user/update-username",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"update-username"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Avatar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhMTE3ZjI1Yy05NmUxLTQ4ZTYtODRmOS03NWQ0M2YwNGZjZjkiLCJpYXQiOjE3Mjg2NDQ1OTUsImV4cCI6MTcyODczMDk5NX0.J6KWDUSN8-iYypgKq9jzQPuV0CSlFQhzodVZjTP9154",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/ethic/Pictures/Screenshots/hfg.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/user/update-avatar",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"update-avatar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cover Image Update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "coverImage",
+									"type": "file",
+									"src": "/C:/Users/ethic/Downloads/Roadmap.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/user/update-cover-image",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"update-cover-image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Channel Details",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3MjkxNjIwMzYsImV4cCI6MTcyOTI0ODQzNn0.eHRGg-NALi3V9nVIDCzYRHvMhhpSftaYkrYNFqE0olI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"mohak\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/user/c/mohak",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"c",
+								"mohak"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get watch history",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1N2EwNWNlNi1hNGQ5LTQxNWEtYjk1NS01MmU2YTcwNWM3YzciLCJpYXQiOjE3MjkzMjI5NjgsImV4cCI6MTcyOTQwOTM2OH0.6rktH_ZZJGmns1y21SnykvByq2iqimtowtayQp2oKJY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/user/watch-history",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"watch-history"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "video",
+			"item": [
+				{
+					"name": "Upload Video",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1N2EwNWNlNi1hNGQ5LTQxNWEtYjk1NS01MmU2YTcwNWM3YzciLCJpYXQiOjE3MjkyNzE0NzksImV4cCI6MTcyOTM1Nzg3OX0.JWsw6n5Soiy3DdbOPgZyqnYG6QU9WHs1hZOsbjQFxOE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"type": "file",
+									"src": "/C:/Users/ethic/Downloads/JavaScript Developers TRYING to Use TypeScript.mp4"
+								},
+								{
+									"key": "thumbnail",
+									"type": "file",
+									"src": "/C:/Users/ethic/Downloads/Screenshot 2024-08-05 at 20-08-20 Heading - YouTube Thumbnail.png"
+								},
+								{
+									"key": "title",
+									"value": "C++",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "course C++",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/video/upload-video",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"video",
+								"upload-video"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle Publish ",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3MjkyNDM0MzAsImV4cCI6MTcyOTMyOTgzMH0.g6us0O1VIqkroNIsr6tCYyLEL6-0j6UxjQPx2vV7aAg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/video/toggle-publish-status/3",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"video",
+								"toggle-publish-status",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Video By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/video/get-video/4",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"video",
+								"get-video",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Video Details",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "new title",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "New description",
+									"type": "text"
+								},
+								{
+									"key": "thumbnail",
+									"type": "file",
+									"src": "/C:/Users/ethic/Downloads/Roadmap.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/video/update-video/8",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"video",
+								"update-video",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Videos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3MjkyNDM0MzAsImV4cCI6MTcyOTMyOTgzMH0.g6us0O1VIqkroNIsr6tCYyLEL6-0j6UxjQPx2vV7aAg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/video/delete-video/13",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"video",
+								"delete-video",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Videos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3MjkyNDM0MzAsImV4cCI6MTcyOTMyOTgzMH0.g6us0O1VIqkroNIsr6tCYyLEL6-0j6UxjQPx2vV7aAg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/video/get-all-videos?sortBy=createdAt&sortType=desc&userId=57a05ce6-a4d9-415a-b955-52e6a705c7c7&query=Javascript, C++, Python, Html",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"video",
+								"get-all-videos"
+							],
+							"query": [
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "sortType",
+									"value": "desc"
+								},
+								{
+									"key": "userId",
+									"value": "57a05ce6-a4d9-415a-b955-52e6a705c7c7"
+								},
+								{
+									"key": "query",
+									"value": "Javascript, C++, Python, Html"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "subscription",
+			"item": [
+				{
+					"name": "Toggle Subscription",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjZDBmZDAxYi1mNmI3LTRkMGYtODIxMy04ZmNkMTE2N2VmOTMiLCJpYXQiOjE3MjkzMjUwNjUsImV4cCI6MTcyOTQxMTQ2NX0.w4miN-Wsts7tzLz2LBxxp3mF0DetKYPe7x14vS1_vvA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/subscription/toggle-subscription/babdb3f0-0d42-47bd-b621-e90547047f24",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"subscription",
+								"toggle-subscription",
+								"babdb3f0-0d42-47bd-b621-e90547047f24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get subscribed channels",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1N2EwNWNlNi1hNGQ5LTQxNWEtYjk1NS01MmU2YTcwNWM3YzciLCJpYXQiOjE3MjkzMjI5NjgsImV4cCI6MTcyOTQwOTM2OH0.6rktH_ZZJGmns1y21SnykvByq2iqimtowtayQp2oKJY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/subscription/get-subscribed-channels/57a05ce6-a4d9-415a-b955-52e6a705c7c7",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"subscription",
+								"get-subscribed-channels",
+								"57a05ce6-a4d9-415a-b955-52e6a705c7c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all subscribers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1N2EwNWNlNi1hNGQ5LTQxNWEtYjk1NS01MmU2YTcwNWM3YzciLCJpYXQiOjE3MjkzMjI5NjgsImV4cCI6MTcyOTQwOTM2OH0.6rktH_ZZJGmns1y21SnykvByq2iqimtowtayQp2oKJY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/subscription/get-subscribers/babdb3f0-0d42-47bd-b621-e90547047f24",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"subscription",
+								"get-subscribers",
+								"babdb3f0-0d42-47bd-b621-e90547047f24"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tweets",
+			"item": [
+				{
+					"name": "Create Tweets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk0MDgzNTgsImV4cCI6MTcyOTQ5NDc1OH0.wT6gjgjIe5dY9u9OX4f8rryzUX96f5U4Mv_nSEvUB-s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tweet\": \"Yo wassap\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/tweet/create",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"tweet",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all tweets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjZDBmZDAxYi1mNmI3LTRkMGYtODIxMy04ZmNkMTE2N2VmOTMiLCJpYXQiOjE3MjkzMjUwNjUsImV4cCI6MTcyOTQxMTQ2NX0.w4miN-Wsts7tzLz2LBxxp3mF0DetKYPe7x14vS1_vvA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/tweet/all",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"tweet",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Tweets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk0MDgzNTgsImV4cCI6MTcyOTQ5NDc1OH0.wT6gjgjIe5dY9u9OX4f8rryzUX96f5U4Mv_nSEvUB-s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tweet\": \"New Yo wassap\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/tweet/update/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"tweet",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Tweet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk0MDgzNTgsImV4cCI6MTcyOTQ5NDc1OH0.wT6gjgjIe5dY9u9OX4f8rryzUX96f5U4Mv_nSEvUB-s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/tweet/delete/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"tweet",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "comments",
+			"item": [
+				{
+					"name": "Add Comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk0MDgzNTgsImV4cCI6MTcyOTQ5NDc1OH0.wT6gjgjIe5dY9u9OX4f8rryzUX96f5U4Mv_nSEvUB-s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment\": \"Good Video\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/comment/add/15",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"comment",
+								"add",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all comments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk0MDgzNTgsImV4cCI6MTcyOTQ5NDc1OH0.wT6gjgjIe5dY9u9OX4f8rryzUX96f5U4Mv_nSEvUB-s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/comment/all/15?limit=10",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"comment",
+								"all",
+								"15"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update comments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk0MDgzNTgsImV4cCI6MTcyOTQ5NDc1OH0.wT6gjgjIe5dY9u9OX4f8rryzUX96f5U4Mv_nSEvUB-s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment\": \"Hello User\",\r\n    \"commentId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/comment/update/15",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"comment",
+								"update",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Comments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk0MDgzNTgsImV4cCI6MTcyOTQ5NDc1OH0.wT6gjgjIe5dY9u9OX4f8rryzUX96f5U4Mv_nSEvUB-s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/comment/delete/15?commentId=3",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"comment",
+								"delete",
+								"15"
+							],
+							"query": [
+								{
+									"key": "commentId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "like",
+			"item": [
+				{
+					"name": "Toggle Likes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk2MTA0NzIsImV4cCI6MTcyOTY5Njg3Mn0.J65osQhttZ5txzDerjIzXEnicwS7KcJuSbp_Aty4EBU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/like/toggle/v/17",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"like",
+								"toggle",
+								"v",
+								"17"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle comments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk2MTA0NzIsImV4cCI6MTcyOTY5Njg3Mn0.J65osQhttZ5txzDerjIzXEnicwS7KcJuSbp_Aty4EBU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/like/toggle/c/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"like",
+								"toggle",
+								"c",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle Tweets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk2MTA0NzIsImV4cCI6MTcyOTY5Njg3Mn0.J65osQhttZ5txzDerjIzXEnicwS7KcJuSbp_Aty4EBU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/like/toggle/t/2",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"like",
+								"toggle",
+								"t",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all videos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk2MTA0NzIsImV4cCI6MTcyOTY5Njg3Mn0.J65osQhttZ5txzDerjIzXEnicwS7KcJuSbp_Aty4EBU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/like/videos",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"like",
+								"videos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "playlist",
+			"item": [
+				{
+					"name": "Create Playlist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk2NTY5MjYsImV4cCI6MTcyOTc0MzMyNn0.xgAhyAk2ifgjkEZiwMGRTCu9nMHK4te6ivURnxerThk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Javascript Basics\",\r\n    \"description\": \"This is about javascript basics\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/playlist/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"playlist",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all playlist from a particular user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk2NTY5MjYsImV4cCI6MTcyOTc0MzMyNn0.xgAhyAk2ifgjkEZiwMGRTCu9nMHK4te6ivURnxerThk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/playlist/user/babdb3f0-0d42-47bd-b621-e90547047f24",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"playlist",
+								"user",
+								"babdb3f0-0d42-47bd-b621-e90547047f24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add video to playlist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk2OTQwNTYsImV4cCI6MTcyOTc4MDQ1Nn0.kPy1a_CK6L6Rt1Oh66tkOKfz63H16noKM_IsZkpe2_0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/playlist/add/16/3",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"playlist",
+								"add",
+								"16",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove video from playlist",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/playlist/remove/16/2",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"playlist",
+								"remove",
+								"16",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete playlist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk2NTY5MjYsImV4cCI6MTcyOTc0MzMyNn0.xgAhyAk2ifgjkEZiwMGRTCu9nMHK4te6ivURnxerThk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/playlist/2",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"playlist",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update details of playlist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYWJkYjNmMC0wZDQyLTQ3YmQtYjYyMS1lOTA1NDcwNDdmMjQiLCJpYXQiOjE3Mjk2OTQwNTYsImV4cCI6MTcyOTc4MDQ1Nn0.kPy1a_CK6L6Rt1Oh66tkOKfz63H16noKM_IsZkpe2_0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"C++\",\r\n    \"description\": \"C++ description\"\r\n}   ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/playlist/3",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"playlist",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "dashboard",
+			"item": [
+				{
+					"name": "stats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1N2EwNWNlNi1hNGQ5LTQxNWEtYjk1NS01MmU2YTcwNWM3YzciLCJpYXQiOjE3Mjk3NTc2OTQsImV4cCI6MTcyOTg0NDA5NH0.CHcley-wvFUMu7iIq7Nj37ECxpxJpcG2cW5-1oeWl0E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/dashboard/stats",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"dashboard",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All video by user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1N2EwNWNlNi1hNGQ5LTQxNWEtYjk1NS01MmU2YTcwNWM3YzciLCJpYXQiOjE3Mjk3NTc2OTQsImV4cCI6MTcyOTg0NDA5NH0.CHcley-wvFUMu7iIq7Nj37ECxpxJpcG2cW5-1oeWl0E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/dashboard/videos",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"dashboard",
+								"videos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
