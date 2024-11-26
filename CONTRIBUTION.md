@@ -22,6 +22,7 @@ Thank you for your interest in contributing to TubeFlow! We welcome contribution
     git branch feature/your-feature-name
     git checkout -b feature/your-feature-name
     ```
+6. Using Docker:
 
 ## How to Contribute
 
