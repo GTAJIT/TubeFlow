@@ -11,15 +11,15 @@ services:
     container_name: tubeflow-backend
     working_dir: /app
     environment:
-      - DATABASE_URL=postgresql://mohak:mysecretpassword@db:5432/youtube
-      - REDIS_URL=rediss://red-csufmhqlqhvc73cmcse0:FOrjYcf9kig4LuuaW5kHjmz4SwRU8bBR@singapore-redis.render.com:6379
-      - JWT_SECRET=mysecretpassword
+      - DATABASE_URL=
+      - REDIS_URL=
+      - JWT_SECRET=
       - JWT_EXPIRY=1d
-      - REFRESH_TOKEN_SECRET=myrefreshtoken
+      - REFRESH_TOKEN_SECRET=
       - REFRESH_EXPIRY=30d
-      - CLOUDINARY_API_SECRET=6ImoSeUKdITPMTwfJl3T6OK9g4w
-      - CLOUDINARY_API_KEY=461632713949731
-      - CLOUDINARY_CLOUD_NAME=dpusyufi0
+      - CLOUDINARY_API_SECRET=
+      - CLOUDINARY_API_KEY=
+      - CLOUDINARY_CLOUD_NAME=
     ports:
       - "5000:5000"
     depends_on:
